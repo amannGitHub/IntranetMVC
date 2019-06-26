@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Staff";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Staff</h1>
+        <p>
+            The new HR section will be further populated in time. Check back for more.
+        </p>
+        <p>Some links may not work currently as we are rebuilding those pages, while others link back to the old intranet for now.</p>
+    </div>
+</div>
+@* Some links below will have to be updated to the point to the new systems *@
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Registration</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @* Below 2 need to be updated for new systems *@
+                    <a href="http://web-dev/intranet-sql/plwizard/selectmtg.asp" target="_blank">Participants List Wiz</a><br />
+                    <a href="http://web-dev/intranet-sql/reconcile/index.asp" target="_blank">Reconcile Fees</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Websites</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @* Below 2 need to be updated for new systems, 3rd link down is to external site *@
+                    <a href="http://web-dev/intranet-sql/hotel/index.asp" target="_blank">Conference Facility</a><br />
+                    <a href="http://web-dev/intranet-sql/mad/index.asp" target="_blank">MMAD</a><br />
+                    <a href="http://www.nihfcu.org/" target="_blank">NIH Federal Credit Union</a>
+                </p>
+            </div>
+        </div>
+    </div> 
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Company</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    You will need Adobe Acrobat to read these PDFs.
+                </p>
+                <p>
+                    @* Check with Randy and make sure this is the replacement for the old Code list, then delete accordingly *@
+                    @*@Html.ActionLink("Project Codes", "Index", "Projects")<br />*@
+                    <a href="http://web-dev/intranet-sql/projectcodes.asp" target="_blank">Project Codes</a><br />
+                    @* Courier Requests still needs to be customized, then we can uncomment below and get rid of the old link *@
+                    @*@Html.ActionLink("Courier Request", "Create", "CourierRequests")<br />*@
+                    <a href="http://web-dev/intranet-sql/courier/index.asp" target="_blank">Courier Request</a><br />
+                    @Html.ActionLink("Employee Directory", "EmployeeIndex", "HR")<br />
+                    @*<a href="http://web-dev/intranet-sql/employee.asp" target="_blank">Employee Directory</a><br />*@
+                    @* Updated link below with new page link once it is created *@
+                    <a href="http://web-dev/intranet-sql/suggest.asp" target="_blank">Intranet Suggestion Box</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">SCG Summary Plan Description and Certificates of Coverage</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    You will need Adobe Acrobat to read these PDFs.
+                </p>
+                <p>
+                    <a href="~/Files/PDFs/Summary Plan/THE_SCIENTIFIC_CONSULTING_GROUP_INC_SPD.pdf" target="_blank">Summary Plan Description</a><br />
+                    <a href="~/Files/PDFs/Summary Plan/3V98 BP PPO 250 (G).pdf" target="_blank">3V98 BP PPO 250 (G)</a><br />
+                    <a href="~/Files/PDFs/Summary Plan/3V98 HB Plus 1500 (G).pdf" target="_blank">3V98 HB Plus 1500 (G)</a><br />
+                    <a href="~/Files/PDFs/Summary Plan/SCIENTIFIC CURRENT DENTAL CERT.pdf" target="_blank">Current Dental Certificate</a><br />
+                    <a href="~/Files/PDFs/Summary Plan/The Scientific Consulting GL 155658 book.pdf" target="_blank">GL 155658 Book</a><br />
+                    <a href="~/Files/PDFs/Summary Plan/The Scientific Consulting Group PRU LTD STD part time.pdf" target="_blank">PRU LTD STD Part Time</a><br />
+                    <a href="~/Files/PDFs/Summary Plan/The Scientific Consulting Group PRU LTD STD.pdf" target="_blank">PRU LTD STD</a><br />
+                    <a href="~/Files/PDFs/Summary Plan/The Scientific Consulting LTD 127349 book.pdf" target="_blank">LTD 127349 Book</a><br />
+                    <a href="~/Files/PDFs/Summary Plan/The Scientific Consulting VG 185565 cert_1.pdf" target="_blank">VG 185565 Cert</a><br />
+                    <a href="~/Files/PDFs/Summary Plan/The Scientific Consulting VPS 327026 book.pdf" target="_blank">VPS 327026 Book</a><br />
+                    <a href="~/Files/PDFs/Summary Plan/THE_SCIENTIFIC_CONSULTING_GROUP_INC_QMCSO.pdf" target="_blank">QMSCO</a><br />
+                    <a href="~/Files/PDFs/Summary Plan/Vision cert group 610659.pdf" target="_blank">Vision Certificate</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

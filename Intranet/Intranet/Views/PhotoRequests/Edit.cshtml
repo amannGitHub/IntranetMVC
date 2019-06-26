@@ -1,0 +1,141 @@
+﻿@model Intranet.Models.Projects
+
+@{
+    ViewBag.Title = "Projects";
+}
+
+@* ToDo: Customize this for Photo Requests *@
+
+<h2>Edit Project</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.project_id)
+        @Html.HiddenFor(model => model.CreatedDate)
+
+        
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ProjectName) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ProjectName)
+                    @Html.ValidationMessageFor(model => model.ProjectName, null, new { @class = "text-danger" })
+                </div>
+
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ProjectCode) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ProjectCode)
+                    @Html.ValidationMessageFor(model => model.ProjectCode, null, new { @class = "text-danger" })
+                </div>
+
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.TaskNumber) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.TaskNumber)
+                    @Html.ValidationMessageFor(model => model.TaskNumber, null, new { @class = "text-danger" })
+                </div>
+
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ContractNumber) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ContractNumber)
+                    @Html.ValidationMessageFor(model => model.ContractNumber, null, new { @class = "text-danger" })
+                </div>
+
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ClientID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("ClientID", ViewData["ClientID"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.ClientID, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.DivisionID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("DivisionID", ViewData["DivisionID"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.DivisionID, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.StartDate)
+                </div>
+                <div class="col-md-1">
+                    @Html.TextBoxFor(model => model.StartDate, new { id = "datetimepicker_start" })
+                    @Html.ValidationMessageFor(model => model.StartDate, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EndDate)
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.EndDate, new { id = "datetimepicker_end" })
+                    @Html.ValidationMessageFor(model => model.EndDate, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        
+    </div>
+
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+
+
+<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker_start').datetimepicker({
+                    daysOfWeekDisabled: [0, 6],
+                    showClear: true,
+                    showTodayButton: true,
+                    stepping: 15
+                });
+                $('#datetimepicker_end').datetimepicker({
+                    daysOfWeekDisabled: [0, 6],
+                    showClear: true,
+                    showTodayButton: true,
+                    stepping: 15,
+                    useCurrent: false
+                });
+                $("#datetimepicker_start").on("dp.change", function (e) {
+                    $('#datetimepicker_end').data("DateTimePicker").minDate(e.date);
+                });
+                $("#datetimepicker_end").on("dp.change", function (e) {
+                    $('#datetimepicker_start').data("DateTimePicker").maxDate(e.date);
+                });
+            });
+</script>

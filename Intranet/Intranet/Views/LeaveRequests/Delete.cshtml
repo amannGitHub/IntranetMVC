@@ -1,0 +1,142 @@
+﻿@model Intranet.Models.LeaveRequests
+
+@{
+    ViewBag.Title = "Delete Leave Request";
+}
+
+<h2>Delete Leave Request </h2>
+
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.leaverequest_id)
+        @Html.HiddenFor(model => model.emp_id)
+        @Html.HiddenFor(model => model.leave_start_dt)
+        @Html.HiddenFor(model => model.leave_end_dt)
+        @Html.HiddenFor(model => model.totalhours)
+        @Html.HiddenFor(model => model.leavetype_id)
+        @Html.HiddenFor(model => model.leave_reason)
+        @Html.HiddenFor(model => model.status)
+        @Html.HiddenFor(model => model.status_dt)
+        @Html.HiddenFor(model => model.create_date)
+        @Html.HiddenFor(model => model.HRApproved)
+        @Html.HiddenFor(model => model.HRSickHours)
+        @Html.HiddenFor(model => model.HRVacationHours)
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leave_start_dt)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.leave_start_dt)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leave_end_dt)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.leave_end_dt)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.totalhours)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.totalhours)
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <div class="col-md-4">
+            
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leavetype_id)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("leavetype_id", ViewData["division"] as List<SelectListItem>, null, new { @disabled = "disabled" })
+                </div>
+            </div>
+
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leave_reason)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.leave_reason)
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.status)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.status)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.status_dt)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.status_dt)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.create_date)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.create_date)
+                </div>
+            </div>
+            <br />&nbsp;
+            
+        </div>
+    </div>
+
+
+    <div class="row">     
+        
+        <div class="alert alert-dismissible alert-danger">
+            Are you sure you want to delete this leave request? It cannot be undone.
+        </div>
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Delete" name="Buttons" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;   
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+

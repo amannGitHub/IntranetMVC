@@ -1,0 +1,244 @@
+﻿@model Intranet.Models.LeaveRequests
+
+@{
+    ViewBag.Title = "Leave Request";
+}
+
+<h2>Edit Leave Request </h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div>
+        <div class="alert alert-dismissible alert-success">
+            @TempData["BalanceCheck"]<br />
+        Note: Contact HR or view your last paystub to confirm official balances.
+    </div>
+    </div>
+
+    <div class="row">
+        @Html.HiddenFor(model => model.leaverequest_id)
+        @Html.HiddenFor(model => model.emp_id)
+        @Html.HiddenFor(model => model.create_date)
+        @Html.HiddenFor(model => model.HRApproved)
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.Label("Requestor")
+                </div>
+                <div class="col-md-10">
+                    @ViewBag.EmployeeName
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leave_start_dt) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.leave_start_dt, new { id = "datetimepicker_start" })
+                    @Html.ValidationMessageFor(model => model.leave_start_dt, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leave_end_dt) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.leave_end_dt, new { id = "datetimepicker_end" })
+                    @Html.ValidationMessageFor(model => model.leave_end_dt, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.totalhours) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.totalhours)
+                    @Html.ValidationMessageFor(model => model.totalhours)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.HRVacationHours) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.HRVacationHours)
+                    @Html.ValidationMessageFor(model => model.HRVacationHours)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.HRSickHours) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.HRSickHours)
+                    @Html.ValidationMessageFor(model => model.HRSickHours)
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leavetype_id) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("leavetype_id", ViewData["division"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.leavetype_id)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leave_reason) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.leave_reason, 8, 40, new { HtmlAttributes = new { } })
+                    @Html.ValidationMessageFor(model => model.leave_reason, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            @*<div class="form-group">
+                <div class="editor-label">
+                    @Html.Label("Requestor")
+                </div>
+                <div class="col-md-10">
+                    @ViewBag.EmployeeName
+                </div>
+            </div>
+            <br />&nbsp;*@
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.status)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.status)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.status_dt)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.status_dt)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.create_date)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.create_date)
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leave_reason) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.leave_reason, 8, 40, new { HtmlAttributes = new { } })
+                    @Html.ValidationMessageFor(model => model.leave_reason, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.OtherComments)
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.OtherComments, 8, 40, new { HtmlAttributes = new { } })
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <br />&nbsp;
+    </div>
+
+    <div class="row">
+        
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+
+                @if (Model.status != "Approved")
+                {
+                    //If leave type is Other and currently not approved, display HR Approve button
+                    if (Model.leavetype_id == 3 && Model.HRApproved != true)
+                    {
+                        <input type="submit" value="HR Approve" name="Buttons" class="btn btn-primary" />
+                    }
+                    //Otherwise, show regular approve button
+                    else
+                    {
+                        <input type="submit" value="Approve" name="Buttons" class="btn btn-primary" />
+                    }
+                }               
+
+                @if (Model.status != "Rejected")
+                {
+                    <input type="submit" value="Reject" name="Buttons" class="btn btn-primary" />
+                }
+
+                <input type="submit" value="Delete" name="Buttons" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "ManageIndex")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker_start').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            showClear: true,
+            showTodayButton: true,
+            stepping: 15,
+            useCurrent: false
+        });
+        $('#datetimepicker_end').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            showClear: true,
+            showTodayButton: true,
+            stepping: 15,
+            useCurrent: false
+        });
+        $("#datetimepicker_start").on("dp.change", function (e) {
+            $('#datetimepicker_end').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker_end").on("dp.change", function (e) {
+            $('#datetimepicker_start').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+</script>

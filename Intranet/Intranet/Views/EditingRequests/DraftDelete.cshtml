@@ -1,0 +1,175 @@
+﻿@model Intranet.Models.Drafts
+
+@{
+    ViewBag.Title = "Delete Draft";
+}
+
+<h2>Delete Draft</h2>
+
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.EditingRequestID)
+        @Html.HiddenFor(model => model.DraftID)
+
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Draft</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DraftID)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.DraftID)
+                        </div>
+                        <br />&nbsp;
+                    </div>
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DraftName)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.DraftName)
+                        </div>
+                        <br />&nbsp;
+                    </div>
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DraftAssignedDate)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.DraftAssignedDate, new { id = "datetimepicker_start" })
+                        </div>
+                        <br />&nbsp;
+                    </div>
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.FinalDraft)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.FinalDraft)
+                            @Html.ValidationMessageFor(model => model.FinalDraft, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Editing</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditorID) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("EditorID", ViewData["EditorID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditingCompleted)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.EditingCompleted)
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditorHours)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.EditorHours)
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DraftCompletedDate)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.DraftCompletedDate, new { id = "datetimepicker_end" })
+                    </div>
+
+                    <br />&nbsp;
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Editorial Review</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditorialReviewerID) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("EditorialReviewerID", ViewData["EditorialReviewerID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.EditorialReviewerID, null, new { @class = "text-danger" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ReviewCompleted)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.ReviewCompleted)
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditorialHours)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.EditorialHours)
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditorialReviewCompleted)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.EditorialReviewCompleted, new { id = "datetimepicker_third" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Notes)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Notes)
+                    </div>
+                    <br />&nbsp;
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">     
+        <br />
+        <div class="alert alert-dismissible alert-danger">
+            Are you sure you want to delete this draft? It cannot be undone.
+        </div>
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Delete" name="Buttons" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;   
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to Editing Request", "ManageRequest", new { id = Model.EditingRequestID, Manage = "Yes" })
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}

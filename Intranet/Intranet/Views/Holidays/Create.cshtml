@@ -1,0 +1,69 @@
+﻿@model Intranet.Models.Holidays
+
+@{
+    ViewBag.Title = "Holidays";
+}
+
+<h2>Add Holiday</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    //TODO: Change the model field names to match the actual Holidays model
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Holiday) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Holiday)
+                    @Html.ValidationMessageFor(model => model.Holiday, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.HolidayDate) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-1">
+                    @Html.TextBoxFor(model => model.HolidayDate, new { id = "datetimepicker_start" })
+                    @Html.ValidationMessageFor(model => model.HolidayDate, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker_start').datetimepicker({
+                    daysOfWeekDisabled: [0, 6],
+                    showClear: true,
+                    showTodayButton: true,
+                    stepping: 15
+                });
+            });
+</script>

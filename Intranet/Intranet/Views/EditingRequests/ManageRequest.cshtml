@@ -1,0 +1,303 @@
+﻿@model Intranet.Models.EditingRequests
+
+@{
+    ViewBag.Title = "Manage Editing Request";
+}
+
+<h2>Manage Editing Request </h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+<br />
+@using (Html.BeginForm("ManageRequest", "EditingRequests", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.EditingRequestID)
+        @Html.HiddenFor(model => model.emp_id)
+        @Html.HiddenFor(model => model.CreatedDate)
+        @Html.HiddenFor(model => model.StatusDate)
+        @Html.HiddenFor(model => model.project_id)
+        @Html.HiddenFor(model => model.EditingRequestStatusID)
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.EditingRequestID)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.EditingRequestID)
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.AlternateContactID) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("AlternateContactID", ViewData["AlternateContactID"] as List<SelectListItem>, "Please select...")
+                            @Html.ValidationMessageFor(model => model.AlternateContactID, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.InternalDueDate)
+                        </div>
+                        <div class="col-md-1">
+                            @Html.TextBoxFor(model => model.InternalDueDate, new { id = "datetimepicker_start" })
+                            @Html.ValidationMessageFor(model => model.InternalDueDate, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.RushJob)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.RushJob)
+                            @Html.ValidationMessageFor(model => model.RushJob, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.project_id) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...")
+                            @Html.ValidationMessageFor(model => model.project_id, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ProjectTitle) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProjectTitle, new { htmlAttributes = new { @class = "title" } })
+                            @Html.ValidationMessageFor(model => model.ProjectTitle, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.BudgetedHours)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.BudgetedHours)
+                            @Html.ValidationMessageFor(model => model.BudgetedHours, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.StyleGuideID) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("StyleGuideID", ViewData["StyleGuideID"] as List<SelectListItem>, "Please select...")
+                            @Html.ValidationMessageFor(model => model.StyleGuideID, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ServiceRequestedID) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("ServiceRequestedID", ViewData["ServiceRequestedID"] as List<SelectListItem>, "Please select...")
+                            @Html.ValidationMessageFor(model => model.ServiceRequestedID, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OtherService)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.OtherService)
+                            @Html.ValidationMessageFor(model => model.OtherService, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.CDRN)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CDRN)
+                            @Html.ValidationMessageFor(model => model.CDRN, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+
+                    </div>
+                    <div class="col-md-6">
+                       
+                        @if (Model.Files.Any(f => f.FileType == FileTypes.EditingRequestFileType))
+                        {
+
+                            <div class="form-group">
+                                <div class="editor-label">
+                                    @Html.Label("Attachments")
+                                </div>
+                                <div class="col-md-10">
+                                    <table>
+
+                                        @foreach (var item in Model.Files)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.ActionLink(item.FileName, "Download", routeValues: new { id = item.FileID })
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+
+                        }
+                        <br />&nbsp;
+                        <br />&nbsp;
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.Label("Attachments") 
+                            </div>
+                            <div class="col-md-10">
+                                <input type="file" name="newFiles" multiple />
+                            </div>
+                        </div>
+
+
+                        <br />&nbsp;
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.RequestDescription) 
+                        </div>
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.RequestDescription, 8, 40, new { HtmlAttributes = new { } })
+                            @Html.ValidationMessageFor(model => model.RequestDescription, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.CreatedDate)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.CreatedDate)
+                            @Html.ValidationMessageFor(model => model.CreatedDate, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.EditingRequestStatusID)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("EditingRequestStatusID", ViewData["EditingRequestStatusID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.StatusDate)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.StatusDate)
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.QAReviewerID)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("QAReviewerID", ViewData["QAReviewerID"] as List<SelectListItem>, "Please select...")
+                        </div>
+                        <br />&nbsp;
+
+                        @if (Model.SubmitterApproved)
+                        {
+                            <br />
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.QADateReceived)
+                            </div>
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.QADateReceived, new { id = "datetimepicker_QAReceived" })
+                                @Html.ValidationMessageFor(model => model.QADateReceived, null, new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <br />
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.QADateCompleted)
+                            </div>
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.QADateCompleted, new { id = "datetimepicker_QACompleted" })
+                                @Html.ValidationMessageFor(model => model.QADateCompleted, null, new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <br />
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.QAStatusID)
+                            </div>
+                            <div class="col-md-10">
+                                @Html.DropDownList("QAStatusID", ViewData["QAStatusID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                            </div>
+                            <br />
+                            <br />
+                            if (Model.QAStatusID != 4)
+                                {
+                                    <input type="submit" value="QA/QC Review Complete" name="Buttons" class="btn btn-primary" />
+                                }
+                            }
+                        <br />&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <br />&nbsp;
+                @if (Model.EditingRequestStatusID != 3)
+                {
+                    <input type="submit" value="Update" name="Buttons" class="btn btn-primary" />
+                    @*<input type="submit" value="Assign" name="Buttons" class="btn btn-primary" />*@
+                }
+                @*@if (Model.EditingRequestStatusID == 2)
+                {
+                    <input type="submit" value="Mark Complete" name="Buttons" class="btn btn-primary" />
+                }*@
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "ManageIndex")
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row">
+        <hr />
+        @Html.Partial("~/Views/EditingRequests/_Drafts.cshtml", ViewData["Drafts"])
+    </div>
+
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker_start').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            showClear: true,
+            showTodayButton: true,
+            stepping: 15,
+            useCurrent: false
+        });
+        $('#datetimepicker_QAReceived').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            showClear: true,
+            showTodayButton: true,
+            stepping: 15,
+            useCurrent: false
+        });
+        $('#datetimepicker_QACompleted').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            showClear: true,
+            showTodayButton: true,
+            stepping: 15,
+            useCurrent: false
+        });
+        if (parseFloat($('#BudgetedHours').val()) == 0) {
+            $('#BudgetedHours').val('');
+        }
+    });
+</script>
+@Styles.Render("~/Content/Site.css")

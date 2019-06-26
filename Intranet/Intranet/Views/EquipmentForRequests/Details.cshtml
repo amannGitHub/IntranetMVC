@@ -1,0 +1,136 @@
+﻿@model Intranet.Models.EquipmentForRequests
+
+@{
+    ViewBag.Title = "Equipment for Requests";
+}
+
+<h2>View Equipment for Requests</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EquipmentID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.EquipmentID)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ItemName)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.ItemName != null)
+                    {
+                        @Html.DisplayFor(model => model.ItemName)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ItemDescription)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.ItemDescription != null)
+                    {
+                        @Html.DisplayFor(model => model.ItemDescription)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EquipmentCategoryID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("EquipmentCategoryID", ViewData["EquipmentCategory"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EquipmentConditionID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("EquipmentConditionID", ViewData["EquipmentCondition"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Notes)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Notes != null)
+                    {
+                        @Html.DisplayFor(model => model.Notes)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+
+            <br />&nbsp;
+            <br />&nbsp;
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Deleted)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Deleted)
+                </div>
+                <br />&nbsp;
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">        
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @{
+                    var Manage = Request.Url.Query.Contains("Manage=Yes");
+                }
+                @if (Manage == true)
+                {
+
+                    @Html.ActionLink("Back to List", "ManageIndex")
+                }
+                else
+                {
+                    @Html.ActionLink("Back to List", "Index")
+                }
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}

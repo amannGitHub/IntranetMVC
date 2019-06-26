@@ -1,0 +1,226 @@
+﻿@model Intranet.Models.Vendors
+
+@{
+    ViewBag.Title = "Vendor";
+}
+
+<h2>View Vendor</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.VendorID)
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.VendorName)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.VendorName)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Street)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Street != null)
+                    {
+                        @Html.DisplayFor(model => model.Street)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.City)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.City != null)
+                    {
+                        @Html.DisplayFor(model => model.City)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.StateID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("StateID", ViewData["StateID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ZipCode)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.ZipCode != null)
+                    {
+                        @Html.DisplayFor(model => model.ZipCode)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Phone)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Phone != null)
+                    {
+                        @Html.DisplayFor(model => model.Phone)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Fax)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Fax != null)
+                    {
+                        @Html.DisplayFor(model => model.Fax)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Website)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Website != null)
+                    {
+                        @Html.DisplayFor(model => model.Website)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Services)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Services != null)
+                    {
+                        @Html.DisplayFor(model => model.Services)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Contact1Name)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Contact1Name != null)
+                    {
+                        @Html.DisplayFor(model => model.Contact1Name)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Contact1Phone)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Contact1Phone != null)
+                    {
+                        @Html.DisplayFor(model => model.Contact1Phone)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Contact2Name)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Contact2Name != null)
+                    {
+                        @Html.DisplayFor(model => model.Contact2Name)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Contact2Phone)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Contact2Phone != null)
+                    {
+                        @Html.DisplayFor(model => model.Contact2Phone)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+    </div>
+
+
+    <div class="row">        
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}

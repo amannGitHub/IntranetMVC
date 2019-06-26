@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@using (Html.BeginForm())
+{
+<div class="row">
+    <div class="col-md-10">
+        <br />
+        <h1>Welcome to the new SCG Intranet!</h1>
+
+        <p>
+            Much of the functionality from the old intranet has been recreated here but has been revamped for a better experience.
+        </p>
+        <p>
+            The previous intranet will still be available for archival purposes. Old requests for leave, web, and more are there and have not 
+            been ported to the new intranet.
+        </p>
+        <p>
+            Follow SCG on <a href="https://www.facebook.com/scientificconsulting" target="_blank">Facebook</a> and 
+            <a href="https://twitter.com/The_SCG" target="_blank">Twitter</a>!
+        </p>
+     </div>
+    <div class="col-md-2">
+        <br />
+        <a href="http://www.scgcorp.com/" target="_blank"><img src="~/Images/SCG-Logo.jpg" /></a>
+    </div>
+ </div>
+
+<hr />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Leave Requests</h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        Request vacation and sick leave, or check the status of pending and past requests.
+                    </p>
+                    @*<p><a class="btn btn-primary" href="/LeaveRequests">Leave Requests &raquo;</a></p>*@
+                    <p><input type="submit" value="Leave Requests" name="Buttons" class="btn btn-primary" /></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">IT Support Requests</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Request IT support for network connectivity, internet isues, phone support, and hardware.</p>
+                    <p><input type="submit" value="IT Support" name="Buttons" class="btn btn-primary" /></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Editing Requests</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Request editing support for clients and internal needs, or check the status of previous requests.</p>
+                    <p><input type="submit" value="Editing Requests" name="Buttons" class="btn btn-primary" /></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Graphics Requests</h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        Request graphics support.
+                    </p>
+                    <p><input type="submit" value="Graphics Requests" name="Buttons" class="btn btn-primary" /></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Web Requests</h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        Request new websites for our clients.
+                    </p>
+                    <p><input type="submit" value="Web Requests" name="Buttons" class="btn btn-primary" /></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Video Requests</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Request video support.</p>
+                    <p><input type="submit" value="Video Requests" name="Buttons" class="btn btn-primary" /></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @*<div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Human Resources</h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        Forms you might need for HR requests and updates will be available here soon.
+                        SCG policies and helpful links have been added.
+                    </p>
+                    <p><input type="submit" value="Visit HR" name="Buttons" class="btn btn-primary" /></p>
+                </div>
+            </div>
+        </div>
+    </div>*@
+}

@@ -1,0 +1,122 @@
+﻿@model Intranet.Models.PhotoRequests
+
+@{
+    ViewBag.Title = "PhotoRequests";
+}
+
+@* ToDo: Customize this for Photo Requests *@
+
+<h2>View Photo Request</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.PhotoRequestID)
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.PhotoRequestID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.PhotoRequestID)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.project_id)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ProjectName)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.ProjectName)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ProjectCode)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.ProjectCode)
+                </div>
+            </div>
+            <br />&nbsp;
+
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ClientID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("ClientID", ViewData["client"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.DivisionID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("DivisionID", ViewData["division"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.RequestDate)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.RequestDate)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EndDate)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </div>
+            </div>
+
+            <br />&nbsp;
+            <br />&nbsp;
+
+        </div>
+
+    </div>
+
+
+    <div class="row">        
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @{
+                    var Manage = Request.Url.Query.Contains("Manage=Yes");
+                }
+                @if (Manage == true)
+                {
+
+                    @Html.ActionLink("Back to List", "ManageIndex")
+                }
+                else
+                {
+                    @Html.ActionLink("Back to List", "Index")
+                }
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}

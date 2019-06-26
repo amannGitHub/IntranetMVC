@@ -1,0 +1,105 @@
+﻿/* Graphics Request Manage Index Colors */
+tr.dan {
+    background-color: #bcdac0 !important;
+}
+
+tr.adam {
+    background-color: #b3b3d7 !important;
+}
+
+tr.bill {
+    background-color: #c0c95e !important;
+}
+
+tr.charles {
+    background-color: #d3c797 !important;
+}
+
+tr.eric {
+    background-color: #b6ddc2 !important;
+}
+
+tr.gabe {
+    background-color: #a5cced !important;
+}
+
+tr.jess {
+    background-color: #e3a7b3 !important;
+}
+
+tr.steve {
+    background-color: #ffee2e !important;
+}
+
+.table-striped {
+    background-color: white !important;
+}
+
+.field-required
+{
+    color: red;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input.title {
+    width: 300px;
+    max-width: 300px;
+}
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.graphics-table {
+    background-color: aqua;
+}
+
+
+/* Vacation Calendar styling*/
+ #colorCodes{
+        margin-top:30px;
+        width:150px;
+        border:1px solid #666666;
+        padding:10px;
+}
+ #colorCodes th{
+        background-color:#efddd1;
+        padding:10px;
+}
+
+#colorCodes td{
+        padding:10px;
+}
+
+.button {
+        background-color:#eee166;
+        border:1px solid #666666;
+}
+
+.weekend {
+        background-color:LightSteelBlue; 
+        border:1px solid #666666;
+}
+
+.normal {
+        border:1px solid #666666;
+}

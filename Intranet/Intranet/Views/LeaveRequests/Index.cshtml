@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Intranet.ViewModels.LeaveRequestsViewModel>
+
+@{
+    ViewBag.Title = "Leave Requests";
+}
+
+<h2>My Leave Requests</h2>
+@if (TempData["Message"] != null)
+{
+<div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+
+<br />
+@using (Html.BeginForm())
+{
+    <input type="submit" value="Request Leave" name="Buttons" class="btn btn-primary"/>
+    <input type="submit" value="Vacation Calendar" name="Buttons" class="btn btn-primary" />
+    if (@User.IsInRole("SCGCORP\\Managers"))
+    {
+        <input type="submit" value="Manage Staff Requests" name="Buttons" class="btn btn-primary" />
+    }
+}
+<br />
+
+<table width="100%">
+    <tr>
+        <td>
+            <div id="demo">
+                <table id="datatablesRequests" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.leaverequest_id)</th>
+                            <th>@Html.DisplayNameFor(model => model.create_date)</th>
+                            <th>@Html.DisplayNameFor(model => model.leave_start_dt)</th>
+                            <th>@Html.DisplayNameFor(model => model.leave_end_dt)</th>
+                            <th>@Html.DisplayNameFor(model => model.LeaveType)</th>
+                            <th>@Html.DisplayNameFor(model => model.status)</th>
+                            <th>@Html.DisplayNameFor(model => model.status_dt)</th>
+                            <th>Manage</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.leaverequest_id</td>
+                            <td>@item.create_date.Value.ToShortDateString() @item.create_date.Value.ToShortTimeString()</td>
+                            <td>@item.leave_start_dt.Value.ToShortDateString() @item.leave_start_dt.Value.ToShortTimeString()</td>
+                            <td>@item.leave_end_dt.Value.ToShortDateString() @item.leave_end_dt.Value.ToShortTimeString()</td>
+                            <td>@item.LeaveType</td>
+                            <td>@item.status</td>
+                            <td>@item.status_dt.Value.ToShortDateString() @item.status_dt.Value.ToShortTimeString()</td>
+                            <td>
+                                @Html.ActionLink("View", "Details", new { id = item.leaverequest_id }) 
+                                
+                                <text>|</text>
+
+                                @if (item.status != "Approved")
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.leaverequest_id })
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Edit</span>
+                                }
+
+                                <text>|</text>
+
+                                @if (item.leave_start_dt.Value < DateTime.Now)
+                                {
+                                    <span class="text-muted">Delete</span>
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.leaverequest_id }) 
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+

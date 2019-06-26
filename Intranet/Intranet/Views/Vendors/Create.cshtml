@@ -1,0 +1,147 @@
+﻿@model Intranet.Models.Vendors
+
+@{
+    ViewBag.Title = "Vendor";
+}
+
+<h2>Vendor</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.VendorID)
+
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.VendorName) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VendorName)
+                    @Html.ValidationMessageFor(model => model.VendorName, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Street)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Street)
+                    @Html.ValidationMessageFor(model => model.Street, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.City)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.City)
+                    @Html.ValidationMessageFor(model => model.City, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.StateID) 
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("StateID", ViewData["StateID"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.StateID, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ZipCode)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ZipCode)
+                    @Html.ValidationMessageFor(model => model.ZipCode, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Phone)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Phone)
+                    @Html.ValidationMessageFor(model => model.Phone, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Fax)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Fax)
+                    @Html.ValidationMessageFor(model => model.Fax, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Website)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Website)
+                    @Html.ValidationMessageFor(model => model.Website, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Services)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Services)
+                    @Html.ValidationMessageFor(model => model.Services, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Contact1Name)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Contact1Name)
+                    @Html.ValidationMessageFor(model => model.Contact1Name, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Contact1Phone)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Contact1Phone)
+                    @Html.ValidationMessageFor(model => model.Contact1Phone, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Contact2Name)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Contact2Name)
+                    @Html.ValidationMessageFor(model => model.Contact2Name, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Contact2Phone)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Contact2Phone)
+                    @Html.ValidationMessageFor(model => model.Contact2Phone, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}

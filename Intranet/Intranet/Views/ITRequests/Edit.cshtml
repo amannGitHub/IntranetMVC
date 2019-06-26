@@ -1,0 +1,127 @@
+﻿@model Intranet.Models.ITRequests
+
+@{
+    ViewBag.Title = "IT Request";
+}
+
+<h2>Edit IT Request </h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.ITRequestID)
+        @Html.HiddenFor(model => model.emp_id)
+        @Html.HiddenFor(model => model.AssignDate)
+        @Html.HiddenFor(model => model.AssigneeID)
+        @Html.HiddenFor(model => model.ITComments)
+        @Html.HiddenFor(model => model.ITRequestStatusID)
+        @Html.HiddenFor(model => model.CreatedDate)
+        @Html.HiddenFor(model => model.StatusDate)
+        @Html.HiddenFor(model => model.project_id)
+        @Html.HiddenFor(model => model.ITRequestTypeID)
+        
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ITRequestTypeID) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("ITRequestTypeID", ViewData["ITRequestTypeID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.ITRequestTypeID, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.RequestDescription) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.RequestDescription, 8, 40, new { HtmlAttributes = new { } })
+                    @Html.ValidationMessageFor(model => model.RequestDescription, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ITRequestID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.ITRequestID)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.project_id)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("project_id", ViewData["division"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ITRequestStatusID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("ITRequestStatusID", ViewData["ITRequestStatusID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.ITRequestStatusID, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.StatusDate)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.StatusDate)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.CreatedDate)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@

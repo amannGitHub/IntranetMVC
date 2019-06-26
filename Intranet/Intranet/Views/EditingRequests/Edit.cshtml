@@ -1,0 +1,315 @@
+﻿@model Intranet.Models.EditingRequests
+
+@{
+    ViewBag.Title = "Editing Request";
+}
+
+<h2>Edit Editing Request </h2>
+<br />
+@using (Html.BeginForm("Edit", "EditingRequests", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.EditingRequestID)
+        @Html.HiddenFor(model => model.emp_id)
+        @Html.HiddenFor(model => model.CreatedDate)
+        @Html.HiddenFor(model => model.StatusDate)
+        @Html.HiddenFor(model => model.project_id)
+        @Html.HiddenFor(model => model.EditingRequestStatusID)
+        @Html.HiddenFor(model => model.QAStatusID)
+        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.EditingRequestID)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.EditingRequestID)
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.AlternateContactID) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("AlternateContactID", ViewData["AlternateContactID"] as List<SelectListItem>, "Please select...")
+                            @Html.ValidationMessageFor(model => model.AlternateContactID, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.InternalDueDate)
+                        </div>
+                        <div class="col-md-1">
+                            @Html.TextBoxFor(model => model.InternalDueDate, new { id = "datetimepicker_start" })
+                            @Html.ValidationMessageFor(model => model.InternalDueDate, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.RushJob)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.RushJob)
+                            @Html.ValidationMessageFor(model => model.RushJob, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.project_id) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...")
+                            @Html.ValidationMessageFor(model => model.project_id, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ProjectTitle) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @*@Html.TextBoxFor(model => model.ProjectTitle, new { @style = "width: 300px" })*@
+                            @Html.EditorFor(model => model.ProjectTitle, new { htmlAttributes = new { @class = "title" } })
+                            @Html.ValidationMessageFor(model => model.ProjectTitle, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.BudgetedHours)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.BudgetedHours@*, new { htmlAttributes = new { @type = "number" } }*@)
+                            @Html.ValidationMessageFor(model => model.BudgetedHours, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.StyleGuideID) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("StyleGuideID", ViewData["StyleGuideID"] as List<SelectListItem>, "Please select...")
+                            @Html.ValidationMessageFor(model => model.StyleGuideID, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ServiceRequestedID) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("ServiceRequestedID", ViewData["ServiceRequestedID"] as List<SelectListItem>, "Please select...")
+                            @Html.ValidationMessageFor(model => model.ServiceRequestedID, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OtherService)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.OtherService)
+                            @Html.ValidationMessageFor(model => model.OtherService, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.CDRN)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CDRN)
+                            @Html.ValidationMessageFor(model => model.CDRN, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        
+                    </div>
+                    <div class="col-md-6">
+                        @if (Model.Files.Any(f => f.FileType == FileTypes.EditingRequestFileType))
+                        {
+
+                            <div class="form-group">
+                                <div class="editor-label">
+                                    @Html.Label("Attachments")
+                                </div>
+                                <div class="col-md-10">
+                                    <table>
+
+                                        @foreach (var item in Model.Files)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.ActionLink(item.FileName, "Download", routeValues: new { id = item.FileID })
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+
+                        }
+                        <br />&nbsp;
+                        <br />&nbsp;
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.Label("Attachments") 
+                            </div>
+                            <div class="col-md-10">
+                                <input type="file" name="newFiles" multiple />
+                            </div>
+                        </div>
+                        <br />&nbsp;
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.RequestDescription)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.RequestDescription, 8, 40, new { HtmlAttributes = new { } })
+                            @Html.ValidationMessageFor(model => model.RequestDescription, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.QAReviewerID)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("QAReviewerID", ViewData["QAReviewerID"] as List<SelectListItem>, "Please select...")
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.CreatedDate)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.CreatedDate)
+                            @Html.ValidationMessageFor(model => model.CreatedDate, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.EditingRequestStatusID)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("EditingRequestStatusID", ViewData["EditingRequestStatusID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.StatusDate)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.StatusDate)
+                        </div>
+                        
+                        <br />&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <h3>Services Requested - Levels of Edit</h3>
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.Label("Crossreading") - 5 pages/hour *
+                            </div>
+                            <div class="col-md-8">
+                                Check text that was scanned or typed (word for word) to ensure that all copy is there to edit or proof.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>@Html.Label("Checking Corrections") - 15 pages/hour *</p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    Check only the revisions that were made. Do not reproof or reedit. Check sense of the sentence. Query
+                                    author if the correction has created an inconsistency in logic or format.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>@Html.Label("Proofreading") - 12 pages/hour *</p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    Check for typos, format, appearance, consistency of headings, pagination, and spacing. Also, check table
+                                    of contents against text.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>@Html.Label("Cursory Edit") - 7 pages/hour *</p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    Ensure proper grammar, punctuation, syntax, spelling, and style (e.g., GPO). Ensure consistency of
+                                    acronyms; spellings; numbers; headings; and reference, figure, and table callouts. Query author about
+                                    unclear, inconsistent, or questionable text.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>@Html.Label("Copyedit") - 5 pages/hour *</p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    Provide all elements of a cursory edit. Check text for logic and sense. Provide parallel structure to
+                                    lists. Verify all reference information and style.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>@Html.Label("Substantitive Edit") - 3 pages/hour *</p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    Provide all elements of cursory and copyedit. Eliminate passive voice, wordiness, and poor usage.
+                                    Revise organization of text. Improve or design tables. Eliminate redundancy, ambiguity, jargon, and
+                                    sentence faults. Check for appropriate tone. Query need for rewrite. Assess parallelism of introduction,
+                                    body, and conclusion. Reformat reference information when necessary.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>* Estimated</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <br />&nbsp;
+                <input type="submit" value="Save" name="Buttons" class="btn btn-primary" />
+                @if (ViewBag.FinalDraft == "Yes")
+                {
+                    <input type="submit" value="Approve" name="Buttons" class="btn btn-primary" />
+                }
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+}
+
+<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker_start').datetimepicker({
+                    daysOfWeekDisabled: [0, 6],
+                    showClear: true,
+                    showTodayButton: true,
+                    stepping: 15
+                });
+                if (parseFloat($('#BudgetedHours').val()) == 0) {
+                    $('#BudgetedHours').val('');
+                }
+            });
+</script>
+@Styles.Render("~/Content/Site.css")

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Intranet.ViewModels.EquipmentForRequestsViewModel>
+
+@{
+    ViewBag.Title = "Choose Equipment";
+}
+
+<h2>Choose Equipment</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <table width="100%">
+        <tr>
+            <td>
+                <div id="demo">
+                    <table id="datatables" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.EquipmentID)</th>
+                                <th>@Html.DisplayNameFor(model => model.EquipmentCategory)</th>
+                                <th>@Html.DisplayNameFor(model => model.ItemName)</th>
+                                <th>@Html.DisplayNameFor(model => model.ItemDescription)</th>
+                                <th>@Html.DisplayNameFor(model => model.EquipmentCondition)</th>
+                                <th>Selected</th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.EquipmentID</td>
+                                <td>@item.EquipmentCategory</td>
+                                <td>@item.ItemName</td>
+                                <td>@item.ItemDescription</td>
+                                <td>@item.EquipmentCondition</td>
+                                <td><input type="checkbox" name="EquipmentIDs" value="@item.EquipmentID" /></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Add Gear" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @*@Html.ActionLink("Back to Editing Request", "ManageRequest", new { id = Model.EditingRequestID, Manage = "Yes" })*@
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}

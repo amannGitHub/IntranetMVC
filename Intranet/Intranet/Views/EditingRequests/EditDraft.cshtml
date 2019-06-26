@@ -1,0 +1,251 @@
+﻿@model Intranet.Models.Drafts
+
+@{
+    ViewBag.Title = "Draft";
+}
+
+<h2>Edit Draft</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-dismissible alert-danger">@TempData["ErrorMessage"]</div>
+}
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.DraftID)
+        @Html.HiddenFor(model => model.EditingRequestID)
+
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Editing</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DraftID)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.DraftID)
+                        </div>
+                        <br />&nbsp;
+                    </div>
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DraftName) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DraftName)
+                            @Html.ValidationMessageFor(model => model.DraftName, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                    </div>
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DraftAssignedDate) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-1">
+                            @Html.TextBoxFor(model => model.DraftAssignedDate, new { id = "datetimepicker_start" })
+                            @Html.ValidationMessageFor(model => model.DraftAssignedDate, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                    </div>
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.FinalDraft)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.FinalDraft)
+                            @Html.ValidationMessageFor(model => model.FinalDraft, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Editing</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditorID) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("EditorID", ViewData["EditorID"] as List<SelectListItem>, "Please select...")
+                        @Html.ValidationMessageFor(model => model.EditorID, null, new { @class = "text-danger" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditingCompleted)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EditingCompleted)
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditorHours) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EditorHours)
+                        @Html.ValidationMessageFor(model => model.EditorHours, null, new { @class = "text-danger" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DraftCompletedDate)
+                    </div>
+                    <div class="col-md-1">
+                        @Html.TextBoxFor(model => model.DraftCompletedDate, new { id = "datetimepicker_end" })
+                        @Html.ValidationMessageFor(model => model.DraftCompletedDate, null, new { @class = "text-danger" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="form-group">
+                        <div class="editor-label"></div>
+                        <div class="col-md-10">
+                            <br />&nbsp;
+                            @if (ViewBag.IsEditor == "Yes")
+                            {
+                                <input type="submit" value="Editing Complete" name="Buttons" class="btn btn-primary" />
+                            }                            
+                        </div>
+                    </div>
+                    <br />&nbsp;
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Editorial Review</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditorialReviewerID) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("EditorialReviewerID", ViewData["EditorialReviewerID"] as List<SelectListItem>, "Please select...")
+                        @Html.ValidationMessageFor(model => model.EditorialReviewerID, null, new { @class = "text-danger" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ReviewCompleted)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ReviewCompleted)
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditorialHours) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EditorialHours)
+                        @Html.ValidationMessageFor(model => model.EditorialHours, null, new { @class = "text-danger" })
+                    </div>
+
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditorialReviewCompleted)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.EditorialReviewCompleted, new { id = "datetimepicker_third" })
+                        @Html.ValidationMessageFor(model => model.EditorialReviewCompleted, null, new { @class = "text-danger" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Notes)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Notes)
+                        @Html.ValidationMessageFor(model => model.Notes, null, new { @class = "text-danger" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="form-group">
+                        <div class="editor-label"></div>
+                        <div class="col-md-10">
+                            <br />&nbsp;
+                            @if (ViewBag.IsEditorReviewer == "Yes")
+                            {
+                                <input type="submit" value="Review Complete" name="Buttons" class="btn btn-primary" />
+                            }
+                            <input type="submit" value="Review Complete" name="Buttons" class="btn btn-primary" />
+                            
+                        </div>
+                    </div>
+                    <br />&nbsp;
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <br />&nbsp;
+                @if (ViewBag.IsEditor == "Yes" || ViewBag.IsEditorReviewer == "Yes")
+                {
+                    //nothing
+                }
+                else
+                {
+                    <input type="submit" value="Save" name="Buttons" class="btn btn-primary" />
+                }
+
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to Editing Request", "ManageRequest", new { id = Model.EditingRequestID, Manage = "Yes" })
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+
+<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker_start').datetimepicker({
+                    daysOfWeekDisabled: [0, 6],
+                    showClear: true,
+                    showTodayButton: true,
+                    stepping: 15,
+                    useCurrent: false
+                });
+                $('#datetimepicker_end').datetimepicker({
+                    daysOfWeekDisabled: [0, 6],
+                    showClear: true,
+                    showTodayButton: true,
+                    stepping: 15,
+                    useCurrent: false
+                });
+                $('#datetimepicker_third').datetimepicker({
+                    daysOfWeekDisabled: [0, 6],
+                    showClear: true,
+                    showTodayButton: true,
+                    stepping: 15,
+                    useCurrent: false
+                });
+                $("#datetimepicker_start").on("dp.change", function (e) {
+                    $('#datetimepicker_end').data("DateTimePicker").minDate(e.date);
+                });
+                $("#datetimepicker_end").on("dp.change", function (e) {
+                    $('#datetimepicker_start').data("DateTimePicker").maxDate(e.date);
+                });
+            });
+</script>

@@ -1,0 +1,102 @@
+﻿@model Intranet.Models.PhotoRequests
+
+@{
+    ViewBag.Title = "Photo Requests";
+}
+
+@* ToDo: Customize this for Photo Requests *@
+
+<h2>Create Photo Request</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    //Hidden fields are populated automatically, either by the DB itself or the controller
+    @Html.HiddenFor(model => model.emp_id)
+    @Html.HiddenFor(model => model.PhotoRequestID)
+    @Html.HiddenFor(model => model.RequestDate)
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ProjectName) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ProjectName)
+                    @Html.ValidationMessageFor(model => model.ProjectName, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.project_id) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.project_id, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ClientID) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("ClientID", ViewData["ClientID"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.ClientID, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.DivisionID) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("DivisionID", ViewData["DivisionID"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.DivisionID, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Location) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Location)
+                    @Html.ValidationMessageFor(model => model.Location, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+            </div>
+            <br />&nbsp;
+            <br />&nbsp;
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+}
+
+@* Uncomment if we ever do need a date picker on this page *@
+@*<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker_start').datetimepicker({
+                    daysOfWeekDisabled: [0, 6],
+                    showClear: true,
+                    showTodayButton: true,
+                    stepping: 15
+                });
+                $("#datetimepicker_start").on("dp.change", function (e) {
+                    $('#datetimepicker_end').data("DateTimePicker").minDate(e.date);
+                });
+            });
+</script>*@

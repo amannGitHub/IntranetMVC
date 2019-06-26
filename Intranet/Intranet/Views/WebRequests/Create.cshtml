@@ -1,0 +1,133 @@
+﻿@model Intranet.Models.WebRequests
+
+@{
+    ViewBag.Title = "Web Request";
+}
+
+<h2>Web Request</h2>
+<br />
+@using (Html.BeginForm("Create", "WebRequests", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.WebRequestID)
+        @Html.HiddenFor(model => model.emp_id)
+
+        <div class="col-md-4">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.project_id) <span class="field-required">*</span>
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...")
+                @Html.ValidationMessageFor(model => model.project_id, null, new { @class = "text-danger" })
+            </div>
+            <br />&nbsp;
+            <div class="editor-label">
+                @Html.LabelFor(model => model.WorkTypeID) <span class="field-required">*</span>
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownList("WorkTypeID", ViewData["WorkTypeID"] as List<SelectListItem>, "Please select...")
+                @Html.ValidationMessageFor(model => model.WorkTypeID, null, new { @class = "text-danger" })
+            </div>
+            <br />&nbsp;
+            <div class="editor-label">
+                @Html.LabelFor(model => model.website_id) <span class="field-required">*</span>
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownList("website_id", ViewData["website_id"] as List<SelectListItem>, "Please select...")
+                @Html.ValidationMessageFor(model => model.website_id, null, new { @class = "text-danger" })
+            </div>
+            <br />&nbsp;
+            <div class="editor-label">
+                @Html.LabelFor(model => model.MaxHours) <span class="field-required">*</span>
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.MaxHours)
+                @Html.ValidationMessageFor(model => model.MaxHours, null, new { @class = "text-danger" })
+            </div>
+
+            <br />&nbsp;
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Comments) <span class="field-required">*</span>
+            </div>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Comments, 8, 40, new { HtmlAttributes = new { } })
+                @Html.ValidationMessageFor(model => model.Comments, null, new { @class = "text-danger" })
+            </div>
+            <br />&nbsp;
+
+            <div class="editor-label">
+                @Html.Label("Attachments")
+            </div>
+            <div class="col-md-10">
+                <input type="file" name="newFiles" multiple />
+            </div>
+        </div>
+
+        <br />&nbsp;
+        <br />&nbsp;
+
+        <div class="col-md-8">
+            <div class="form-group">
+                <h3>Instructions</h3>
+                <p>
+                    If you are submitting a Content Update (eg. Agenda, Logistics, Hotel, etc), please attach a hard copy with
+                    the changes marked as well as soft copy.
+                </p>
+
+                <p>
+                    If your Project Number is not listed, select the option for 0000 (last option), and put in the comment section
+                    the correct project number.
+                </p>
+
+                <p>
+                    Any documents that are to be published MUST have previously gone through editing. TEAM Web will ONLY accept
+                    documents that do not require editing.
+                </p>
+
+                <p>When printing is complete, attach the request form to any draft copies you are submitting.</p>
+                <br />
+                <p>
+                    <h4>Maximum Hours</h4>
+                    The figure that you submit WILL be used in full. Please be generous and cognitive of this amount. If we feel we
+                    will require more hours, we will bring this to your attention before any work is completed on the request.
+                    <br /><br />This accounts for ONLY web development. It does not include hours for Editing or Graphics!
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    @*<br />&nbsp;
+        <br />&nbsp;*@
+    <div class="row">
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+<script type="text/javascript">
+    $(function () {
+        $("#MaxHours").val('');
+    });
+</script>
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@

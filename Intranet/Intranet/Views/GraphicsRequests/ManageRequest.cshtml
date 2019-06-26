@@ -1,0 +1,713 @@
+﻿@model Intranet.Models.GraphicsRequests
+
+@{
+    ViewBag.Title = "Manage Graphics Request";
+}
+
+<h2>Manage Graphics Request</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.GraphicsRequestID)
+    @Html.HiddenFor(model => model.emp_id)
+    @Html.HiddenFor(model => model.RequestDate)
+    @Html.HiddenFor(model => model.project_id)
+    @Html.HiddenFor(model => model.GraphicRequestStatusID)
+    @Html.HiddenFor(model => model.StatusDate)
+    @* ToDo: make sure all the ^ is removed from below *@
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.GraphicRequestStatusID != 3)
+                {
+                    <div class="form-group">
+                        <div class="editor-label"></div>
+                        <div class="col-md-10">
+                            @if (Model.GraphicRequestStatusID != 3)
+                            {
+                                <input type="submit" value="Update" name="Buttons" class="btn btn-primary" />
+                                @*<input type="submit" value="Assign" name="Buttons" class="btn btn-primary" />*@
+                            }
+                            @if (Model.GraphicRequestStatusID == 2 && Model.AssigneeID != null)
+                            {
+                                <input type="submit" value="Mark Complete" name="Buttons" class="btn btn-primary" />
+                            }
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                }
+                <p>Please complete all appropriate information categories.</p>
+                <p>To request graphic services, the requestor must complete the Graphics Request Form; graphics work will not commence without a completed request form. Graphics will be able to accomodate quick and easy requests as required. If you find yourself in this situation, please talk to a Director of Graphics for assistance.</p>
+                @*<br />&nbsp;*@
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <h3>Project Information</h3>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ProjectTitle) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProjectTitle, new { htmlAttributes = new { @class = "title" } })
+                            @Html.ValidationMessageFor(model => model.ProjectTitle, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.project_id) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...")
+                            @Html.ValidationMessageFor(model => model.project_id, null, new { @class = "text-danger" })
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ProjectLocation) @*<span class="field-required">*</span>*@
+                        </div>
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.ProjectLocation, 6, 40, new { HtmlAttributes = new { } })
+                            @*@Html.ValidationMessageFor(model => model.project_id, null, new { @class = "text-danger" })*@
+                        </div>
+                        <br />&nbsp;
+
+                    </div>
+                    @*<br />&nbsp;*@
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DraftDueDate) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.DraftDueDate, new { id = "datetimepicker_start" })
+                            @Html.ValidationMessageFor(model => model.DraftDueDate, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <br />&nbsp;
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.FinalDueDate) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.FinalDueDate, new { id = "datetimepicker_end" })
+                            @Html.ValidationMessageFor(model => model.FinalDueDate, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MaxHours) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MaxHours)
+                        @Html.ValidationMessageFor(model => model.MaxHours, null, new { @class = "text-danger" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AdditionalHours)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.AdditionalHours)
+                        @*@Html.ValidationMessageFor(model => model.AdditionalHours, null, new { @class = "text-danger" })*@
+                    </div>
+                    <br />&nbsp;
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.AssigneeID)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("AssigneeID", ViewData["AssigneeID"] as List<SelectListItem>, "Assign...")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.GraphicRequestStatusID)
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("GraphicRequestStatusID", ViewData["GraphicRequestStatusID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                            @*@Html.ValidationMessageFor(model => model.GraphicRequestStatusID, null, new { @class = "text-danger" })*@
+                        </div>
+                        <br />&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Product/Services Requested *@
+    <h3>Product/Services Requested (please check all that apply)</h3>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Conference Materials</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                @* Cover/spine design start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.CoverSpineDesign)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.CoverSpineDesign)
+                        (@Html.LabelFor(model => model.CoverQuantity) @Html.EditorFor(model => model.CoverQuantity) and @Html.LabelFor(model => model.NotebookSize) @Html.TextBoxFor(model => model.NotebookSize) of notebook)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Cover/spine design start *@
+                @* Folder label start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FolderLabel)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.FolderLabel)
+                        (@Html.LabelFor(model => model.FolderLabelQuantity) @Html.EditorFor(model => model.FolderLabelQuantity))
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Folder label end *@
+                @* Meeting poster start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MeetingPoster)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.MeetingPoster)
+                        (@Html.LabelFor(model => model.PosterQuantity) @Html.EditorFor(model => model.PosterQuantity), @Html.LabelFor(model => model.PosterArrows) @Html.TextBoxFor(model => model.PosterArrows), @Html.LabelFor(model => model.PosterAttachments) @Html.TextBoxFor(model => model.PosterAttachments))
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Meeting poster end *@
+            </div>
+            <div class="col-md-6">
+                @* Map start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Map)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.Map)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Map end *@
+                @* Name badges start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.NameBadges)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.NameBadges)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Name badges end *@
+                @* Poster session materials start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PosterSessionMaterials)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.PosterSessionMaterials)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Poster session materials end *@
+                @* PowerPoint slide start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PowerpointSlide)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.PowerpointSlide)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* PowerPoint slide end *@
+                @* Save the date/postcard start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.SaveTheDatePostCard)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.SaveTheDatePostCard)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Save the date/postcard end *@
+            </div>
+            <div class="col-md-6">
+                @* Table tents start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.TableTents)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.TableTents)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Table tents end *@
+                @* Tabs start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Tabs)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.Tabs)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Tabs end *@
+                @* Web banner start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.WebBanner)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.WebBanner)
+
+                        @Html.TextBoxFor(model => model.WebBannerSize)
+                        @Html.LabelFor(model => model.WebBannerSize)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Web banner end *@
+                @* Web rotator image start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.WebRotatorImage)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.WebRotatorImage)
+                        @Html.TextBoxFor(model => model.WebRotatorImageSize)
+                        @Html.LabelFor(model => model.WebRotatorImageSize)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Web rotator image end *@
+                @* Other start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ConferenceMaterialsOther)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.ConferenceMaterialsOther)
+                        @Html.TextBoxFor(model => model.ConferenceMaterialsOtherText)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Other end *@
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Book/Publication/Desktop Publishing</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                @* Brochure start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Brochures)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.Brochures)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Brochure end *@
+                @* Fact sheets start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FactSheets)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.FactSheets)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Fact sheets end *@
+                @* Flyers start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Flyers)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.Flyers)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Flyers end *@
+            </div>
+            <div class="col-md-6">
+                @* Newsletter start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Newsletter)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.Newsletter)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Newsletter end *@
+                @* Project Description start
+                    This might be redundant, might be covered under Instructions, must check *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BookPublishingProject)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.BookPublishingProject)
+                        @Html.TextBoxFor(model => model.BookPublishingProjectDescription)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Project Description end *@
+                @* Other (Description) start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BookPublishingOther)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.BookPublishingOther)
+                        @Html.TextBoxFor(model => model.BookPublishingOtherText)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Other (Description) end *@
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Print Production</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PrepToPrint)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.PrepToPrint)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PDFtoPrint)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.PDFtoPrint)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ScanToPrint)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.ScanToPrint)
+                    </div>
+                </div>
+                <br />&nbsp;
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Binding)
+                        @Html.CheckBoxFor(model => model.Binding)
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Staple)&nbsp;@Html.CheckBoxFor(model => model.Staple)
+                            &ensp;
+                            @Html.LabelFor(model => model.Tapebind)&nbsp;@Html.CheckBoxFor(model => model.Tapebind)
+                            &ensp;
+                            @Html.LabelFor(model => model.Coil)&nbsp;@Html.CheckBoxFor(model => model.Coil)
+                            &ensp;
+                            @Html.LabelFor(model => model.Saddlestitch)&nbsp;@Html.CheckBoxFor(model => model.Saddlestitch)
+                            &ensp;
+                            @Html.LabelFor(model => model.GBC)&nbsp;@Html.CheckBoxFor(model => model.GBC)
+                        </div>
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PrintProductionProjectDescription)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.PrintProductionProjectDescription)
+                        @Html.TextBoxFor(model => model.PrintProductionProjectDescriptionText)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PrintProductionExistingFiles)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.PrintProductionExistingFiles)
+                        @Html.TextBoxFor(model => model.PrintProductionExistingFilesText)
+                    </div>
+                </div>
+                <br />&nbsp;
+            </div>
+            <div class="col-md-10">
+                @* ToDo: Quantity, Size, and Pages should all be in the same form-group *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PrintProductionQuantity)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.PrintProductionQuantity)
+                        @Html.EditorFor(model => model.PrintProductionQuantityNumber)
+                        @Html.LabelFor(model => model.PrintProductionSize) @Html.TextBoxFor(model => model.PrintProductionSize)
+                        @Html.LabelFor(model => model.PrintProductionPages) @Html.TextBoxFor(model => model.PrintProductionPages)
+                    </div>
+                </div>
+                @* ToDo: Binding, Staple, TapeBind, Coil, Saddlestitch, and GBC should all be in the same form-group *@
+                <br />&nbsp;
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Other</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherAdvert)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.OtherAdvert)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BoothExhibitDesign)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.BoothExhibitDesign)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DiscDuplication)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.DiscDuplication)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ChartDiagramFigures)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.ChartDiagramFigures)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FileConversion)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.FileConversion)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Illustration)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.Illustration)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherProject)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.OtherProject)
+                        @Html.TextBoxFor(model => model.OtherProjectDescription)
+                    </div>
+                </div>
+                <br />&nbsp;
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Letterhead)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.Letterhead)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LogoDesign)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.LogoDesign)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Postcards)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.Postcards)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherPowerPointSlides)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.OtherPowerPointSlides)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherPowerPointSlidesNum)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.OtherPowerPointSlidesNum)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Scanning)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.Scanning)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherOther)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.OtherOther)
+                        @Html.TextBoxFor(model => model.OtherOtherDescription)
+                    </div>
+                </div>
+                <br />&nbsp;
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Instructions)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Instructions, 8, 40, new { HtmlAttributes = new { } })
+                        @Html.ValidationMessageFor(model => model.Instructions, null, new { @class = "text-danger" })
+                    </div>
+                    <br />&nbsp;
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RequestorApproved)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.RequestorApproved)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @if (Model.GraphicRequestStatusID != 3)
+                {
+                    <input type="submit" value="Update" name="Buttons" class="btn btn-primary" />
+                    @*<input type="submit" value="Assign" name="Buttons" class="btn btn-primary" />*@
+                }
+                @if (Model.GraphicRequestStatusID == 2 && Model.AssigneeID != null)
+                {
+                    <input type="submit" value="Mark Complete" name="Buttons" class="btn btn-primary" />
+                }
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "ManageIndex")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker_start').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            showClear: true,
+            showTodayButton: true,
+            stepping: 15,
+            useCurrent: false
+        });
+        $('#datetimepicker_end').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            showClear: true,
+            showTodayButton: true,
+            stepping: 15,
+            useCurrent: false
+        });
+        $("#datetimepicker_start").on("dp.change", function (e) {
+            $('#datetimepicker_end').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker_end").on("dp.change", function (e) {
+            $('#datetimepicker_start').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+</script>
+@Styles.Render("~/Content/Site.css")

@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Team Resources";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>IT Team Resources</h2>
+        <br />
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Reference Materials</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @Html.ActionLink("Initial Phone Setup Instructions", "Mailbox", "HR")
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Activity</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @Html.ActionLink("Equipment Request", "Create", "EquipmentRequests")<br />
+                    @Html.ActionLink("Request Support", "Create", "ItRequests")
+                </p>
+            </div>
+
+        </div>
+     </div>
+</div>

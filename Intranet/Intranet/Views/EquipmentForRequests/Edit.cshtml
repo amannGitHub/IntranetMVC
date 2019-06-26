@@ -1,0 +1,117 @@
+﻿@model Intranet.Models.EquipmentForRequests
+
+@{
+    ViewBag.Title = "Equipment for Requests";
+}
+
+<h2>Edit Equipment for Request</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.EquipmentID)
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EquipmentID)
+                </div>
+                <div class="col-md-10">
+                    @* We don't want them to be able to change this in the DB, but it should be displayed still *@
+                    @Html.DisplayFor(model => model.EquipmentID)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ItemName)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ItemName)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ItemDescription)
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.ItemDescription, 8, 40, new { HtmlAttributes = new { } })
+                </div>
+            </div>
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EquipmentCategoryID) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("EquipmentCategoryID", ViewData["EquipmentCategoryID"] as List<SelectListItem>, "Please select...", new { })
+                    @Html.ValidationMessageFor(model => model.EquipmentCategoryID, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EquipmentConditionID) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("EquipmentConditionID", ViewData["EquipmentConditionID"] as List<SelectListItem>, "Please select...", new { })
+                    @Html.ValidationMessageFor(model => model.EquipmentConditionID, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Notes) 
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Notes, 8, 40, new { HtmlAttributes = new { } })
+                </div>
+            </div>
+                       
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <br />&nbsp; 
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Deleted)
+                </div>
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.Deleted)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}

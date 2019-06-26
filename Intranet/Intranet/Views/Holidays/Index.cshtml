@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Intranet.Models.Holidays>
+
+@{
+    ViewBag.Title = "Holidays";
+}
+
+<h2>Holidays</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+<br />
+@using (Html.BeginForm())
+{
+    @*<input type="submit" value="Request Support" name="Buttons" class="btn btn-primary"/>*@
+    if (@User.IsInRole("SCGCORP\\Developers"))
+    {
+        <input type="submit" value="Add Holiday" name="Buttons" class="btn btn-primary" />
+    }
+}
+<br />
+
+<table width="100%">
+    <tr>
+        <td>
+            <div id="demo">
+                <table id="datatables" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.HolidayDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.Holiday)</th>
+                            @*<th>@Html.DisplayNameFor(model => model.CreatedDate)</th>*@
+                            @if (User.IsInRole("SCGCORP\\Developers"))
+                            {
+                                <th></th>
+                            }
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.HolidayDate.ToShortDateString()</td>
+                            <td>@item.Holiday</td>
+                            @*<td>@item.CreatedDate</td>*@
+                            @if (User.IsInRole("SCGCORP\\Developers"))
+                            {
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.HolidayID })
+                                </td>
+                            }                                
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+

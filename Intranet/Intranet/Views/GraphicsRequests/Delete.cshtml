@@ -1,0 +1,777 @@
+﻿@model Intranet.Models.GraphicsRequests
+
+@{
+    ViewBag.Title = "Delete Graphics Request";
+}
+
+<h2>Delete Graphics Request</h2>
+<br />
+@* TODO: Fix this for GraphicsRequest model *@
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.GraphicsRequestID)
+    @Html.HiddenFor(model => model.emp_id)
+    @*@Html.HiddenFor(model => model.Deleted)*@
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <p>Please complete all appropriate information categories.</p>
+                <p>To request graphic services, the requestor must complete the Graphics Request Form; graphics work will not commence without a completed request form. Graphics will be able to accomodate quick and easy requests as required. If you find yourself in this situation, please talk to a Director of Graphics for assistance.</p>
+                @*<br />&nbsp;*@
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <h3>Project Information</h3>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ProjectTitle) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.ProjectTitle)
+                            @*@Html.ValidationMessageFor(model => model.ProjectTitle, null, new { @class = "text-danger" })*@
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.project_id) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                            @*@Html.ValidationMessageFor(model => model.project_id, null, new { @class = "text-danger" })*@
+                        </div>
+                        <br />&nbsp;
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ProjectLocation) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @if (Model.ProjectLocation != null)
+                            {
+                                @Html.DisplayFor(model => model.ProjectLocation)
+                            }
+                            else
+                            {
+                                @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                            }
+                            @*@Html.ValidationMessageFor(model => model.project_id, null, new { @class = "text-danger" })*@
+                        </div>
+                        <br />&nbsp;
+                    </div>
+                    @*<br />&nbsp;*@
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DraftDueDate) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.DraftDueDate, new { id = "datetimepicker_start" })
+                            @*@Html.ValidationMessageFor(model => model.DraftDueDate, null, new { @class = "text-danger" })*@
+                        </div>
+                    </div>
+                    <br />&nbsp;
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.FinalDueDate) <span class="field-required">*</span>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.FinalDueDate, new { id = "datetimepicker_end" })
+                            @*@Html.ValidationMessageFor(model => model.FinalDueDate, null, new { @class = "text-danger" })*@
+                        </div>
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MaxHours) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.MaxHours)
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AdditionalHours)
+                    </div>
+                    <div class="col-md-10">
+                        @if (Model.AdditionalHours != null)
+                        {
+                            @Html.DisplayFor(model => model.AdditionalHours)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                    @*<br />&nbsp;*@
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Product/Services Requested *@
+    <h3>Product/Services Requested (please check all that apply)</h3>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Conference Materials</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                @* Cover/spine design start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.CoverSpineDesign)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.CoverSpineDesign)
+                        (@Html.LabelFor(model => model.CoverQuantity) 
+                        @if (Model.CoverQuantity != null)
+                        {
+                            @Html.DisplayFor(model => model.CoverQuantity)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                        and @Html.LabelFor(model => model.NotebookSize) 
+                        @if (Model.NotebookSize != null)
+                        {
+                            @Html.DisplayFor(model => model.NotebookSize)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        } of notebook)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Cover/spine design start *@
+                @* Folder label start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FolderLabel)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.FolderLabel)
+                        (@Html.LabelFor(model => model.FolderLabelQuantity) 
+                        @if (Model.FolderLabelQuantity != null)
+                        {
+                            @Html.DisplayFor(model => model.FolderLabelQuantity)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        })
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Folder label end *@
+                @* Meeting poster start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MeetingPoster)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.MeetingPoster)
+                        (@Html.LabelFor(model => model.PosterQuantity) 
+                        @if (Model.PosterQuantity != null)
+                        {
+                            @Html.DisplayFor(model => model.PosterQuantity)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }, @Html.LabelFor(model => model.PosterArrows) 
+                        @if (Model.PosterArrows != null)
+                        {
+                            @Html.DisplayFor(model => model.PosterArrows)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }, @Html.LabelFor(model => model.PosterAttachments) 
+                        @if (Model.PosterAttachments != null)
+                        {
+                            @Html.DisplayFor(model => model.PosterAttachments)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        })
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Meeting poster end *@
+            </div>
+            <div class="col-md-6">
+                @* Map start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Map)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Map)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Map end *@
+                @* Name badges start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.NameBadges)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.NameBadges)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Name badges end *@
+                @* Poster session materials start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PosterSessionMaterials)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.PosterSessionMaterials)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Poster session materials end *@
+                @* PowerPoint slide start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PowerpointSlide)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.PowerpointSlide)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* PowerPoint slide end *@
+                @* Save the date/postcard start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.SaveTheDatePostCard)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.SaveTheDatePostCard)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Save the date/postcard end *@
+            </div>
+            <div class="col-md-6">
+                @* Table tents start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.TableTents)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.TableTents)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Table tents end *@
+                @* Tabs start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Tabs)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Tabs)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Tabs end *@
+                @* Web banner start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.WebBanner)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.WebBanner)
+                        @*@if (Model.WebBannerSize != null)
+                        {*@
+                            @Html.DisplayFor(model => model.WebBannerSize)
+                        @*}
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }*@
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Web banner end *@
+                @* Web rotator image start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.WebRotatorImage)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.WebRotatorImage)
+                        @*@if (Model.WebRotatorImageSize != null)
+                        {*@
+                            @Html.DisplayFor(model => model.WebRotatorImageSize)
+                        @*}
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }*@
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Web rotator image end *@
+                @* Other start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ConferenceMaterialsOther)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.ConferenceMaterialsOther)
+                        @*@if (Model.ConferenceMaterialsOtherText != null)
+                        {*@
+                            @Html.DisplayFor(model => model.ConferenceMaterialsOtherText)
+                        @*}
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }*@
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Other end *@
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Book/Publication/Desktop Publishing</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                @* Brochure start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Brochures)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Brochures)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Brochure end *@
+                @* Fact sheets start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FactSheets)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.FactSheets)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Fact sheets end *@
+                @* Flyers start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Flyers)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Flyers)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Flyers end *@
+            </div>
+            <div class="col-md-6">
+                @* Newsletter start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Newsletter)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Newsletter)
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Newsletter end *@
+                @* Project Description start
+                    This might be redundant, might be covered under Instructions, must check *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BookPublishingProject)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.BookPublishingProject)
+                        @*@if (Model.BookPublishingProjectDescription != null)
+                        {*@
+                            @Html.DisplayFor(model => model.BookPublishingProjectDescription)
+                        @*}
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }*@
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Project Description end *@
+                @* Other (Description) start *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BookPublishingOther)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.BookPublishingOther)
+                        @*@if (Model.BookPublishingOtherText != null)
+                        {*@
+                            @Html.DisplayFor(model => model.BookPublishingOtherText)
+                        @*}
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }*@
+                    </div>
+                </div>
+                <br />&nbsp;
+                @* Other (Description) end *@
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Print Production</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PrepToPrint)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.PrepToPrint)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PDFtoPrint)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.PDFtoPrint)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ScanToPrint)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.ScanToPrint)
+                    </div>
+                </div>
+                <br />&nbsp;
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Binding)
+                        @Html.DisplayFor(model => model.Binding)
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Staple)&nbsp;@Html.DisplayFor(model => model.Staple)
+                            &ensp;
+                            @Html.LabelFor(model => model.Tapebind)&nbsp;@Html.DisplayFor(model => model.Tapebind)
+                            &ensp;
+                            @Html.LabelFor(model => model.Coil)&nbsp;@Html.DisplayFor(model => model.Coil)
+                            &ensp;
+                            @Html.LabelFor(model => model.Saddlestitch)&nbsp;@Html.DisplayFor(model => model.Saddlestitch)
+                            &ensp;
+                            @Html.LabelFor(model => model.GBC)&nbsp;@Html.DisplayFor(model => model.GBC)
+                        </div>
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PrintProductionProjectDescription)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.PrintProductionProjectDescription)
+                        @*@if (Model.PrintProductionProjectDescriptionText != null)
+                        {*@
+                            @Html.DisplayFor(model => model.PrintProductionProjectDescriptionText)
+                        @*}
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }*@
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PrintProductionExistingFiles)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.PrintProductionExistingFiles)
+                        @*@if (Model.PrintProductionExistingFilesText != null)
+                        {*@
+                            @Html.DisplayFor(model => model.PrintProductionExistingFilesText)
+                        @*}
+                            else
+                            {
+                                @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                            }*@
+                    </div>
+                </div>
+                <br />&nbsp;
+            </div>
+            <div class="col-md-10">
+                @* ToDo: Quantity, Size, and Pages should all be in the same form-group *@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PrintProductionQuantity)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.PrintProductionQuantity)
+                        @*@if (Model.PrintProductionQuantityNumber != null)
+                        {*@
+                            @Html.DisplayFor(model => model.PrintProductionQuantityNumber)
+                        @*}
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }*@
+                        @Html.LabelFor(model => model.PrintProductionSize) 
+                        @if (Model.PrintProductionSize != null)
+                        {
+                            @Html.DisplayFor(model => model.PrintProductionSize)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                        @Html.LabelFor(model => model.PrintProductionPages) 
+                        @if (Model.PrintProductionPages != null)
+                        {
+                            @Html.DisplayFor(model => model.PrintProductionPages)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                </div>
+                @* ToDo: Binding, Staple, TapeBind, Coil, Saddlestitch, and GBC should all be in the same form-group *@
+                <br />&nbsp;
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Other</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherAdvert)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.OtherAdvert)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BoothExhibitDesign)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.BoothExhibitDesign)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DiscDuplication)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.DiscDuplication)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ChartDiagramFigures)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.ChartDiagramFigures)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FileConversion)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.FileConversion)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Illustration)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Illustration)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherProject)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.OtherProject)
+                        @*@if (Model.OtherProjectDescription != null)
+                        {*@
+                            @Html.DisplayFor(model => model.OtherProjectDescription)
+                        @*}
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }*@
+                    </div>
+                </div>
+                <br />&nbsp;
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Letterhead)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Letterhead)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LogoDesign)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.LogoDesign)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Postcards)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Postcards)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherPowerPointSlides)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.OtherPowerPointSlides)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherPowerPointSlidesNum)
+                    </div>
+                    <div class="col-md-10">
+                        @if (Model.OtherPowerPointSlidesNum != null)
+                        {
+                            @Html.DisplayFor(model => model.OtherPowerPointSlidesNum)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Scanning)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Scanning)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherOther)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.OtherOther)
+                        @*@if (Model.OtherOtherDescription != null)
+                        {*@
+                            @Html.DisplayFor(model => model.OtherOtherDescription)
+                        @*}
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }*@
+                    </div>
+                </div>
+                <br />&nbsp;
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Instructions) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Instructions)
+                    </div>
+                    <br />&nbsp;
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+    </div>
+
+    <div class="row">     
+        <div class="alert alert-dismissible alert-danger">
+            Are you sure you want to delete this Graphics request? It cannot be undone.
+        </div>
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Delete" name="Buttons" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;   
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+

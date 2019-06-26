@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Intranet.ViewModels.InventoryViewModel>
+
+@{
+    ViewBag.Title = "Inventory";
+}
+
+<h2>Inventory</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+<br />
+@using (Html.BeginForm())
+{
+    @*<input type="submit" value="Request Support" name="Buttons" class="btn btn-primary"/>*@
+    if (@User.IsInRole("SCGCORP\\Developers"))
+    {
+        <input type="submit" value="Add Staff Gear" name="Buttons" class="btn btn-primary" />
+        <input type="submit" value="Add Spare Gear" name="Buttons" class="btn btn-primary" />
+        <input type="submit" value="Add Printer Gear" name="Buttons" class="btn btn-primary" />
+        <input type="submit" value="Add Video Gear" name="Buttons" class="btn btn-primary" />
+        <input type="submit" value="Add Laptop Gear" name="Buttons" class="btn btn-primary" />
+        <input type="submit" value="Add Recording Gear" name="Buttons" class="btn btn-primary" />
+        <input type="submit" value="Add Frederick Gear" name="Buttons" class="btn btn-primary" />
+        <input type="submit" value="Add Donation" name="Buttons" class="btn btn-primary" />
+    }
+}
+<br />
+
+<table width="100%">
+    <tr>
+        <td>
+            <div id="demo">
+                <table id="datatables" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.InventoryID)</th>
+                            <th>@Html.DisplayNameFor(model => model.Employee)</th>
+                            <th>@Html.DisplayNameFor(model => model.Manufacturer)</th>
+                            <th>@Html.DisplayNameFor(model => model.EquipmentModel)</th>
+                            <th>@Html.DisplayNameFor(model => model.EquipmentType)</th>
+                            <th>@Html.DisplayNameFor(model => model.EquipmentCategory)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.InventoryID</td>
+                            <td>@item.Employee</td>
+                            <td>@item.Manufacturer</td>
+                            <td>@item.EquipmentModel</td>
+                            <td>@item.EquipmentType</td>
+                            <td>@item.EquipmentCategory</td>
+                            <td>
+                                @if (item.EquipmentCategory == "Staff")
+                                {
+                                    @Html.ActionLink("Edit", "EditStaff", new { id = item.InventoryID })
+                                }
+                                @if (item.EquipmentCategory == "Spare")
+                                {
+                                    @Html.ActionLink("Edit", "EditSpare", new { id = item.InventoryID })
+                                }
+                                @if (item.EquipmentCategory == "Printers and Scanners")
+                                {
+                                    @Html.ActionLink("Edit", "EditPrinter", new { id = item.InventoryID })
+                                }
+                                @if (item.EquipmentCategory == "Videos and Projectors")
+                                {
+                                    @Html.ActionLink("Edit", "EditVideo", new { id = item.InventoryID })
+                                }
+                                @if (item.EquipmentCategory == "Laptops")
+                                {
+                                    @Html.ActionLink("Edit", "EditLaptop", new { id = item.InventoryID })
+                                }
+                                @if (item.EquipmentCategory == "Recorders and Accessories")
+                                {
+                                    @Html.ActionLink("Edit", "EditRecorder", new { id = item.InventoryID })
+                                }
+                                @if (item.EquipmentCategory == "Phones")
+                                {
+                                    @Html.ActionLink("Edit", "EditPhones", new { id = item.InventoryID })
+                                }
+                                @if (item.EquipmentCategory == "Frederick")
+                                {
+                                    @Html.ActionLink("Edit", "EditFrederick", new { id = item.InventoryID })
+                                }
+                                @if (item.EquipmentCategory == "Donations")
+                                {
+                                    @Html.ActionLink("Edit", "EditDonation", new { id = item.InventoryID })
+                                }
+                                @if (item.EquipmentCategory == "7th Floor")
+                                {
+                                    @Html.ActionLink("Edit", "EditSeventh", new { id = item.InventoryID })
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+

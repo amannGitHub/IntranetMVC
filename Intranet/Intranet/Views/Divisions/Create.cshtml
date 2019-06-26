@@ -1,0 +1,60 @@
+﻿@model Intranet.Models.Divisions
+
+@{
+    ViewBag.Title = "Division Addition";
+}
+
+<h2>Division</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @*@Html.HiddenFor(model => model.DivisionID)
+        @Html.HiddenFor(model => model.Deleted)*@
+
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Division) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Division)
+                    @Html.ValidationMessageFor(model => model.Division)
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Acronym) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Acronym)
+                    @Html.ValidationMessageFor(model => model.Acronym, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Intranet.ViewModels.AssignmentsViewModel>
+
+@{
+    ViewBag.Title = "My Assignments";
+}
+
+<h2>My Assignments</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+<br />
+
+<table width="100%">
+    <tr>
+        <td>
+            <div id="demo">
+                <table id="datatables" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.DraftID)</th>
+                            <th>@Html.DisplayNameFor(model => model.DraftName)</th>
+                            <th>@Html.DisplayNameFor(model => model.DraftAssignedDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.Editor)</th>
+                            <th>@Html.DisplayNameFor(model => model.DraftCompletedDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.Reviewer)</th>
+                            <th>@Html.DisplayNameFor(model => model.EditorialReviewCompleted)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.DraftID</td>
+                            <td>@item.DraftName</td>
+                            <td>@item.DraftAssignedDate.ToShortDateString()</td>
+                            <td>@item.Editor</td>
+                            <td>
+                                @item.DraftCompletedDate
+                           
+                            </td>
+                            <td>@item.Reviewer</td>
+                            <td>
+                               @item.EditorialReviewCompleted
+                            </td>
+                            
+                                <td>
+                                    @Html.ActionLink("View", "ManageRequest", new { id = item.EditingRequestID, Manage = "Yes" })
+                                </td>
+                           
+
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+

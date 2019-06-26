@@ -1,0 +1,70 @@
+﻿@model Intranet.Models.ITRequests
+
+@{
+    ViewBag.Title = "IT Request";
+}
+
+<h2>IT Request</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.ITRequestID)
+        @Html.HiddenFor(model => model.emp_id)
+
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.RequestDescription) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.RequestDescription, 8, 40, new { HtmlAttributes = new { } })
+                    @Html.ValidationMessageFor(model => model.RequestDescription, null, new { @class = "text-danger" })
+                </div>
+
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ITRequestTypeID) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("ITRequestTypeID", ViewData["ITRequestType"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.ITRequestTypeID, null, new { @class = "text-danger" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.project_id) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.project_id, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <br />&nbsp;
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}

@@ -1,0 +1,131 @@
+﻿@model Intranet.Models.LeaveRequests
+
+@{
+    ViewBag.Title = "Leave Request";
+}
+
+<h2>View Leave Request </h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.leaverequest_id)
+        @Html.HiddenFor(model => model.emp_id)
+        @Html.HiddenFor(model => model.HRApproved)
+        @Html.HiddenFor(model => model.HRSickHours)
+        @Html.HiddenFor(model => model.HRVacationHours)
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leave_start_dt)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.leave_start_dt)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leave_end_dt)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.leave_end_dt)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.totalhours)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.totalhours)
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <div class="col-md-4">
+            
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leavetype_id)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("leavetype_id", ViewData["division"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.leave_reason)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.leave_reason)
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.status)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.status)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.status_dt)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.status_dt)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.create_date)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.create_date)
+                </div>
+            </div>
+            <br />&nbsp;
+            <br />&nbsp;
+        </div>
+    </div>
+
+
+    <div class="row">        
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @{
+                    var Manage = Request.Url.Query.Contains("Manage=Yes");
+                }
+                @if (Manage == true)
+                {
+
+                    @Html.ActionLink("Back to List", "ManageIndex")
+                }
+                else
+                {
+                    @Html.ActionLink("Back to List", "Index")
+                }
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+

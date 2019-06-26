@@ -1,0 +1,257 @@
+﻿@using System.DirectoryServices.AccountManagement;
+@using Intranet.BLL;
+    
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - SCG Intranet</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Images/favicon-16x16.png">
+
+    <!-- DataTables Stuff -->
+    <script src="~/Content/DataTables/jQuery-2.2.3/jquery-2.2.3.min.js" type="text/javascript"></script>
+    <script src="~/Content/DataTables/datatables.min.js"></script>
+    <link href="~/Content/DataTables/datatables.css" rel="stylesheet" />
+
+    <!-- Style sheet to make the site have SCG colors -->
+    <link href="~/Content/bootstrap-spacelab.css" rel="stylesheet" />
+
+    <script type="text/javascript" charset="utf8">
+        $(document).ready(function () {
+            $('#datatables').DataTable({
+                stateSave: true
+            }
+             );
+        });
+    </script>
+    @* Meeting Tracker Index*@
+    <script type="text/javascript" charset="utf8">
+        $(document).ready(function () {
+            $('#datatablesMeetings').DataTable({
+                stateSave: true,
+                "order": [
+                    [5, "desc"],
+                    [6, "desc"]
+                ]
+            }
+             );
+        });
+    </script>
+    @* Requests Index *@
+    <script type="text/javascript" charset="utf8">
+        $(document).ready(function () {
+            $('#datatablesRequests').DataTable({
+                stateSave: true,
+                "order": [[1, "desc"]]
+            }
+             );
+        });
+    </script>
+    @* Project Codes Index *@
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#datatablesCodes').DataTable({
+                stateSave: true,
+                iDisplayLength: -1
+            }
+             );
+        });
+    </script>
+
+    <!-- Bootstrap DateTimePicker -->
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+
+    <style type='text/css'>
+        ul.nav li.dropdown:hover ul.dropdown-menu {
+            display: block;
+        }
+    </style>
+
+</head>
+<body>@* TODO: remove test roles from menu items ( i.e.  || User.IsInRole("SCGCORP\\Developers") ) *@
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("SCG Intranet", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            @* Some menu items get multiple IsActiveTop calls because some of the sub-menu items use different controllers *@
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown @Html.IsActiveTop("EditingRequests")">
+                        <a class="dropdown-toggle disabled" data-toggle="dropdown" href=@Url.Action("Home", "EditingRequests") aria-expanded="false">
+                            Editing <span class="caret"></span>
+                        </a>
+                            <ul class="dropdown-menu">
+                                <li class="@Html.IsActive("EditingRequests", "Index")">@Html.ActionLink("My Editing Requests", "Index", "EditingRequests")</li>
+                                @if (User.IsInRole("SCGCORP\\Editing") || User.IsInRole("SCGCORP\\Developers"))
+                                {
+                                    <li class="divider"></li>
+                                    <li class="@Html.IsActive("EditingRequests", "ManageIndex")">@Html.ActionLink("Manage Editing Requests", "ManageIndex", "EditingRequests")</li>
+                                    <li class="@Html.IsActive("EditingRequests", "Assignments")">@Html.ActionLink("My Assignments", "Assignments", "EditingRequests")</li>
+                                }
+                            </ul>
+                    </li>
+                    <li class="dropdown @Html.IsActiveTop("GraphicsRequests")">
+                        <a class="dropdown-toggle disabled" data-toggle="dropdown" href=@Url.Action("Home", "GraphicsRequests") aria-expanded="false">
+                            Graphics <span class="caret"></span>
+                        </a>                       
+                            <ul class="dropdown-menu">
+                                <li class="@Html.IsActive("GraphicsRequests", "Index")">@Html.ActionLink("My Graphics Requests", "Index", "GraphicsRequests")</li>
+                                @if (User.IsInRole("SCGCORP\\Graphics") || User.IsInRole("SCGCORP\\Developers"))
+                                {
+                                    <li class="divider"></li>
+                                    <li class="@Html.IsActive("GraphicsRequests", "ManageIndex")">@Html.ActionLink("Manage Graphics Requests", "ManageIndex", "GraphicsRequests")</li>
+                                    @*<li>@Html.ActionLink("Vendors", "Index", "GraphicsRequests")</li>*@
+                                    @*<li>@Html.ActionLink("Photo Request", "Index", "PhotoRequests")</li>*@
+                                }
+                            </ul>
+                    </li>
+                    <li class="dropdown @Html.IsActiveTop("HR") @Html.IsActiveTop("Holidays")">
+                        <a class="dropdown-toggle disabled" data-toggle="dropdown" href=@Url.Action("Index", "HR") aria-expanded="false">
+                            Human Resources <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsActive("HR", "EmployeeIndex")">@Html.ActionLink("Employee Directory", "EmployeeIndex", "HR")</li>
+                            <li class="@Html.IsActive("Holidays", "Index")">@Html.ActionLink("Holiday List", "Index", "Holidays")</li>
+                            @*<li>@Html.ActionLink("Directory", "About", "Home")</li>*@
+                        </ul>
+                    </li>
+                    <li class="dropdown @Html.IsActiveTop("ITRequests") @Html.IsActiveTop("Inventories")">
+                        <a class="dropdown-toggle disabled" data-toggle="dropdown" href=@Url.Action("Home", "ITRequests") aria-expanded="false">
+                            IT <span class="caret"></span>
+                        </a>
+                        
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsActive("ITRequests", "Index")">@Html.ActionLink("My IT Requests", "Index", "ITRequests")</li>
+                            <li class="@Html.IsActive("EquipmentRequests", "Index")">@Html.ActionLink("My Equipment Requests", "Index", "EquipmentRequests")</li>
+                            @if (User.IsInRole("SCGCORP\\SCG Computer Support") || User.IsInRole("SCGCORP\\Developers"))
+                            {
+                                <li class="divider"></li>
+                                <li class="@Html.IsActive("ITRequests", "ManageIndex")">@Html.ActionLink("Manage IT Requests", "ManageIndex", "ITRequests")</li>
+                                <li class="@Html.IsActive("EquipmentRequests", "ManageIndex")">@Html.ActionLink("Manage Equipment Requests", "ManageIndex", "EquipmentRequests")</li>
+                                <li class="@Html.IsActive("EquipmentForRequests", "Index")">@Html.ActionLink("Manage Equipment for Requests", "Index", "EquipmentForRequests")</li>
+                                <li class="@Html.IsActive("Inventories", "Index")">@Html.ActionLink("Manage Inventory", "Index", "Inventories")</li>
+                                @*<li>@Html.ActionLink("Manage Toners", "Index", "Toners")</li>*@
+                                @*<li>@Html.ActionLink("Directory", "About", "Home")</li>*@
+                            }
+                        </ul>
+                        
+                    </li>
+
+                    <li class="dropdown @Html.IsActiveTop("MeetingTracker")">
+                        <a class="dropdown-toggle disabled" data-toggle="dropdown" href=@Url.Action("Home", "MeetingTracker") aria-expanded="false">
+                            Meetings <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsActive("MeetingTracker", "Index")">@Html.ActionLink("Meeting Tracker", "Index", "MeetingTracker")</li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown @Html.IsActive("Home", "Staff") @Html.IsActiveTop("LeaveRequests")">
+                        <a class="dropdown-toggle disabled" data-toggle="dropdown" href=@Url.Action("Staff", "Home") aria-expanded="false">
+                            Staff <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsActive("LeaveRequests", "Codes")">
+                                @Html.ActionLink("Project Codes", "Codes", "LeaveRequests")
+                            </li>
+                            <li class="@Html.IsActive("LeaveRequests", "Index")">
+                                @Html.ActionLink("My Leave Requests", "Index", "LeaveRequests")
+                            @if (User.IsInRole("SCGCORP\\Managers") || User.IsInRole("SCGCORP\\Developers"))
+                            {
+                            <li class="divider"></li>
+                            <li class="@Html.IsActive("LeaveRequests", "ManageIndex")">@Html.ActionLink("Manage Leave Requests", "ManageIndex", "LeaveRequests")</li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="dropdown @Html.IsActiveTop("VideoRequests")">
+                        <a class="dropdown-toggle disabled" data-toggle="dropdown" href=@Url.Action("Home", "VideoRequests") aria-expanded="false">
+                            Video <span class="caret"></span>
+                        </a>
+                            <ul class="dropdown-menu">
+                                <li class="@Html.IsActive("VideoRequests", "Index")">@Html.ActionLink("My Video Requests", "Index", "VideoRequests")</li>
+                                @if (User.IsInRole("SCGCORP\\Video") || User.IsInRole("SCGCORP\\Developers"))
+                                {
+                                    <li class="divider"></li>
+                                    <li class="@Html.IsActive("VideoRequests", "ManageIndex")">@Html.ActionLink("Manage Video Requests", "ManageIndex", "VideoRequests")</li>
+                                }
+                            </ul>
+                        
+                    </li>
+                    <li class="dropdown @Html.IsActiveTop("WebRequests")">
+                        <a class="dropdown-toggle disabled" data-toggle="dropdown" href=@Url.Action("Home", "WebRequests") 
+                           aria-expanded="false">Web <span class="caret"></span>
+                        </a>                       
+                            <ul class="dropdown-menu">
+                                <li class="@Html.IsActive("WebRequests", "Index")">@Html.ActionLink("My Web Requests", "Index", "WebRequests")</li>
+                                @if (User.IsInRole("SCGCORP\\Developers"))
+                                {
+                                    <li class="divider"></li>
+                                    <li class="@Html.IsActive("WebRequests", "ManageIndex")">@Html.ActionLink("Manage Web Requests", "ManageIndex", "WebRequests")</li>
+                                }
+                            </ul>
+                        
+                    </li>
+                    @if (User.IsInRole("SCGCORP\\Managers"))
+                    {
+                        <li class="dropdown @Html.IsActiveTop("Admin") @Html.IsActiveTop("Clients") @Html.IsActiveTop("Divisions") @Html.IsActiveTop("Projects")">
+                            <a class="dropdown-toggle disabled" data-toggle="dropdown" href=@Url.Action("Index", "Admin") aria-expanded="false">
+                                Admin <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="@Html.IsActiveTop("Clients")">@Html.ActionLink("Clients", "Index", "Clients")</li>
+                                <li class="@Html.IsActive("Divisions", "Index")">@Html.ActionLink("Divisions", "Index", "Divisions")</li>
+                                <li class="@Html.IsActive("Projects", "Index")">@Html.ActionLink("Projects", "Index", "Projects")</li>    
+                            </ul>
+                        </li>
+                    }
+                </ul>
+                @{ 
+                    var context = new PrincipalContext(ContextType.Domain);
+                    var principal = UserPrincipal.FindByIdentity(context, User.Identity.Name);
+                }
+                <p class="nav navbar-text navbar-right">Hello, @principal.GivenName @principal.Surname!</p>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="col-md-4">
+                <p>&copy; @DateTime.Now.Year - SCG Intranet</p>
+            </div>
+            <div class="col-md-4">
+               
+            </div>
+            <div class="col-md-4">
+                <address>
+                    The Scientific Consulting Group, Inc.<br />
+                    656 Quince Orchard Road, Suite 210<br />
+                    Gaithersburg, MD 20878-1409<br />
+                    <abbr title="Phone">P:</abbr> 301-670-4099<br />
+                    <abbr title="Fax">F:</abbr> 301-670-3815
+                </address>
+            </div>
+            
+        </footer>
+    </div>
+
+    @*@Styles.Render("~/Content/Site.css")*@
+
+</body>
+</html>

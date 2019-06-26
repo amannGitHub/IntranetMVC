@@ -1,0 +1,420 @@
+﻿@model Intranet.Models.MeetingTracker
+
+@{
+    ViewBag.Title = "Meeting Tracker";
+}
+
+<h2>View Meeting</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.project_id) 
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MeetingPlannerID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("MeetingPlannerID", ViewData["MeetingPlannerID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MeetingTitle) 
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.MeetingTitle)
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ShortName)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.ShortName)
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ClientID) 
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("ClientID", ViewData["ClientID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MeetingStartDate) 
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.MeetingStartDate)
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MeetingEndDate)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.MeetingEndDate)
+                </div>
+                <br />&nbsp;
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.RegistrationEndDate) 
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.RegistrationEndDate)
+                </div>
+
+                <br />&nbsp;
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MaxRegistrants)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.MaxRegistrants)
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.RegistrationFee)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.RegistrationFee)
+                </div>
+                <br />&nbsp;
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.LocationID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("LocationID", ViewData["LocationID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.FinalAttendeeCount)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.FinalAttendeeCount)
+                </div>
+                <br />&nbsp;
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MeetingPurpose)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.MeetingPurpose != null)
+                    {
+                        @Html.DisplayFor(model => model.MeetingPurpose)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+                <br />&nbsp;
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ProblemsAndSolutions)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.ProblemsAndSolutions != null)
+                    {
+                        @Html.DisplayFor(model => model.ProblemsAndSolutions)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+                <br />&nbsp;
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Notes)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Notes != null)
+                    {
+                        @Html.DisplayFor(model => model.Notes)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+                <br />&nbsp;
+
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Menu Items for Regitration Site</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Home)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Home)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Registration)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Registration)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Logistics)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Logistics)
+                    </div>
+                </div>
+                <br />&nbsp;
+
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Agenda)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Agenda)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Abstracts)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Abstracts)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Other)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Other)
+                    </div>
+                </div>
+                <br />&nbsp;
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Registration Fields</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h4>Instructions</h4>
+                A field should be "Selected" if you want that field to appear on the registration form.<br />
+                A field should be "Required" if ALL registrants must enter valid information for that field.<br /><hr />
+            </div>
+            <div class="col-md-6">
+
+                <table width="300px;">
+                    <tr>
+                        <td colspan="3"><h4>Identifiers</h4></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td align="center">@Html.Label("Selected")</td>
+                        <td align="center">@Html.Label("Required")</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Honorific)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Honorific)</td>
+                        <td align="center">@Html.DisplayFor(model => model.HonorificReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.FirstName)</td>
+                        <td align="center">@Html.DisplayFor(model => model.FirstName)</td>
+                        <td align="center">@Html.DisplayFor(model => model.FirstNameReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.LastName)</td>
+                        <td align="center">@Html.DisplayFor(model => model.LastName)</td>
+                        <td align="center">@Html.DisplayFor(model => model.LastNameReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Degree)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Degree)</td>
+                        <td align="center">@Html.DisplayFor(model => model.DegreeReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Title)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Title)</td>
+                        <td align="center">@Html.DisplayFor(model => model.TitleReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Department)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Department)</td>
+                        <td align="center">@Html.DisplayFor(model => model.DepartmentReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Organization)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Organization)</td>
+                        <td align="center">@Html.DisplayFor(model => model.OrganizationReq)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><h4>Address</h4></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td align="center">@Html.Label("Selected")</td>
+                        <td align="center">@Html.Label("Required")</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Address1)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Address1)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Address1Req)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Address2)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Address2)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Address2Req)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.City)</td>
+                        <td align="center">@Html.DisplayFor(model => model.City)</td>
+                        <td align="center">@Html.DisplayFor(model => model.CityReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.State)</td>
+                        <td align="center">@Html.DisplayFor(model => model.State)</td>
+                        <td align="center">@Html.DisplayFor(model => model.StateReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Country)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Country)</td>
+                        <td align="center">@Html.DisplayFor(model => model.CountryReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Zipcode)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Zipcode)</td>
+                        <td align="center">@Html.DisplayFor(model => model.ZipcodeReq)</td>
+                    </tr>
+                </table>
+
+                <br />&nbsp;
+            </div>
+            <div class="col-md-6">
+
+                <table width="300px;">
+                    <tr>
+                        <td colspan="3"><h4>Contact</h4></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td align="center">@Html.Label("Selected")</td>
+                        <td align="center">@Html.Label("Required")</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Phone)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Phone)</td>
+                        <td align="center">@Html.DisplayFor(model => model.PhoneReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Email)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Email)</td>
+                        <td align="center">@Html.DisplayFor(model => model.EmailReq)</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3"><hr /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><h4>Other</h4></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td align="center">@Html.Label("Selected")</td>
+                        <td align="center">@Html.Label("Required")</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Bios)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Bios)</td>
+                        <td align="center">@Html.DisplayFor(model => model.BiosReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Abstracts1)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Abstracts1)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Abstracts1Req)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Posters)</td>
+                        <td align="center">@Html.DisplayFor(model => model.Posters)</td>
+                        <td align="center">@Html.DisplayFor(model => model.PostersReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.DietaryRestrictions)</td>
+                        <td align="center">@Html.DisplayFor(model => model.DietaryRestrictions)</td>
+                        <td align="center">@Html.DisplayFor(model => model.DietaryRestrictionsReq)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.SpecialNeeds)</td>
+                        <td align="center">@Html.DisplayFor(model => model.SpecialNeeds)</td>
+                        @*<td align="center">@Html.DisplayFor(model => model.SpecialNeedsReq)</td>*@
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.PaymentMethods) *</td>
+                        <td align="center">@Html.DisplayFor(model => model.PaymentMethods)</td>
+                        <td align="center">@Html.DisplayFor(model => model.PaymentMethodsReq)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><br /><br />* Payment Method is only for sites with registration fees</td>
+                    </tr>
+                </table>
+                <br />&nbsp;
+            </div>
+        </div>
+    </div>
+
+    <div class="row">    
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Deleted)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Deleted)
+                </div>
+                <br />&nbsp;
+                <div class="editor-label"></div>
+                <div class="col-md-10">
+                    <br />&nbsp;
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+    </div>
+
+}

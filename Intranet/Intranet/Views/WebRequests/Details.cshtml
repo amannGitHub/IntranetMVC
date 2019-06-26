@@ -1,0 +1,174 @@
+﻿@model Intranet.Models.WebRequests
+
+@{
+    ViewBag.Title = "Web Request";
+}
+
+<h2>View Web Request </h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.WebRequestID)
+        @Html.HiddenFor(model => model.emp_id)
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.project_id)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.WorkTypeID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("WorkTypeID", ViewData["WorkTypeID"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.website_id)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("website_id", ViewData["website_id"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MaxHours)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.MaxHours)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Comments)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Comments)
+                </div>
+            </div>
+            <br />&nbsp;
+            <br />&nbsp;
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.WebRequestStatusID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("WebRequestStatusID", ViewData["WebRequestStatusID"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.RequestDate)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.RequestDate != null)
+                    {
+                        @Html.DisplayFor(model => model.RequestDate)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.AssigneeID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("AssigneeID", ViewData["AssigneeID"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.CompletedDate)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.CompletedDate != null)
+                    {
+                        @Html.DisplayFor(model => model.CompletedDate)
+                    }
+                    else
+                    {
+                        @System.Web.Configuration.WebConfigurationManager.AppSettings["NotCompletedText"]
+                    }
+                </div>
+            </div>
+
+            <br />&nbsp;
+            @if (Model.Files.Any(f => f.FileType == FileTypes.WebRequestFileType))
+            {
+            
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.Label("Attachments")
+                </div>
+                <div class="col-md-10">
+                    <table>
+
+                        @foreach (var item in Model.Files)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(item.FileName, "Download", routeValues: new { id = item.FileID })
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+
+            }
+
+            <br />&nbsp;
+            <br />&nbsp;
+        </div>
+    </div>
+
+
+    <div class="row">        
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @{
+                    var Manage = Request.Url.Query.Contains("Manage=Yes");
+                }
+                @if (Manage == true)
+                {
+
+                    @Html.ActionLink("Back to List", "ManageIndex")
+                }
+                else
+                {
+                    @Html.ActionLink("Back to List", "Index")
+                }
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+

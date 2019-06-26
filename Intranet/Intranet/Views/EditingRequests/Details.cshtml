@@ -1,0 +1,290 @@
+﻿@model Intranet.Models.EditingRequests
+
+@{
+    ViewBag.Title = "Editing Request";
+}
+
+<h2>View Editing Request </h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditingRequestID)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.EditingRequestID)
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AlternateContactID) 
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("AlternateContactID", ViewData["AlternateContactID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.InternalDueDate)
+                    </div>
+                    <div class="col-md-10">
+                        @if (Model.InternalDueDate != null)
+                        {
+                            @Html.DisplayFor(model => model.InternalDueDate)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RushJob)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.RushJob)
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.project_id) 
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ProjectTitle) 
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.ProjectTitle)
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BudgetedHours)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.BudgetedHours)
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.StyleGuideID) 
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("StyleGuideID", ViewData["StyleGuideID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ServiceRequestedID) 
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("ServiceRequestedID", ViewData["ServiceRequestedID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherService)
+                    </div>
+                    <div class="col-md-10">
+                        @if (Model.OtherService != null)
+                        {
+                            @Html.DisplayFor(model => model.OtherService)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.CDRN)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.CDRN)
+                    </div>
+                    <br />&nbsp;
+
+                </div>
+                <div class="col-md-6">
+
+                    @if (Model.Files.Any(f => f.FileType == FileTypes.EditingRequestFileType))
+                    {
+
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.Label("Attachments")
+                            </div>
+                            <div class="col-md-10">
+                                <table>
+
+                                    @foreach (var item in Model.Files)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.ActionLink(item.FileName, "Download", routeValues: new { id = item.FileID })
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.Label("Attachments")
+                            </div>
+                            <div class="col-md-10">
+                                None<br />
+                            </div>
+                        </div>
+                    }
+                    <br />&nbsp;
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RequestDescription)
+                    </div>
+                    <div class="col-md-10">
+                        @if (Model.RequestDescription != null)
+                        {
+                            @Html.DisplayFor(model => model.RequestDescription)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                    <br />&nbsp;
+
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.CreatedDate)
+                    </div>
+                    <div class="col-md-10">
+                        @if (Model.CreatedDate != null)
+                        {
+                            @Html.DisplayFor(model => model.CreatedDate)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EditingRequestStatusID)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("EditingRequestStatusID", ViewData["EditingRequestStatusID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.StatusDate)
+                    </div>
+                    <div class="col-md-10">
+                        @if (Model.StatusDate != null)
+                        {
+                            @Html.DisplayFor(model => model.StatusDate)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                    <br />&nbsp;
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.QAReviewerID)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("QAReviewerID", ViewData["QAReviewerID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                    </div>
+                    <br />&nbsp;
+                    
+                    
+
+                    @if ((Model.CDRN && Model.CDRNApproved) || (Model.CDRN == false && ViewBag.FinalDraft == "Yes"))
+                    {
+                        <br />
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.QADateReceived)
+                            </div>
+                            <div class="col-md-10">
+                                @if (Model.QADateReceived != null)
+                                {
+                                    @Html.DisplayFor(model => model.QADateReceived)
+                                }
+                                else
+                                {
+                                    @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                                }
+                            </div>
+                            <br />
+                            <br />
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.QADateCompleted)
+                            </div>
+                            <div class="col-md-10">
+                                @if (Model.QADateCompleted != null)
+                                {
+                                    @Html.DisplayFor(model => model.QADateCompleted)
+                                }
+                                else
+                                {
+                                    @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                                }
+                            </div>
+                            <br />
+                            <br />
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.QAStatusID)
+                            </div>
+                            <div class="col-md-10">
+                                @Html.DropDownList("QAStatusID", ViewData["QAStatusID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                            </div>
+
+                    }
+                    <br />&nbsp;
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">        
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <br />&nbsp;
+                @{
+                    var Manage = Request.Url.Query.Contains("Manage=Yes");
+                }
+                @if (Manage == true)
+                {
+
+                    @Html.ActionLink("Back to List", "ManageIndex")
+                }
+                else
+                {
+                    @Html.ActionLink("Back to List", "Index")
+                }
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+    <div class="row">
+        <hr />
+        @Html.Partial("~/Views/EditingRequests/_Drafts.cshtml", ViewData["Drafts"])
+    </div>
+
+                    }
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+

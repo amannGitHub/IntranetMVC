@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Intranet.ViewModels.EquipmentRequestsViewModel>
+
+@{
+    ViewBag.Title = "Equipment Requests";
+}
+
+<h2>My Equipment Requests</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+<br />
+@using (Html.BeginForm())
+{
+    <input type="submit" value="Request Equipment" name="Buttons" class="btn btn-primary"/>
+    if (@User.IsInRole("SCGCORP\\SCG Computer Support"))
+    {
+        <input type="submit" value="Manage Equipment Requests" name="Buttons" class="btn btn-primary" />
+    }
+}
+<br />
+
+<table width="100%">
+    <tr>
+        <td>
+            <div id="demo">
+                <table id="datatablesRequests" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.EquipmentRequestID)</th>
+                            <th>@Html.DisplayNameFor(model => model.RequestSubmittedDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.EquipmentRequestStatus)</th>
+                            <th>@Html.DisplayNameFor(model => model.RequestStartDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.RequestEndDate)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.EquipmentRequestID</td>
+                            <td>@item.RequestSubmittedDate.ToShortDateString()</td>
+                            <td>@item.EquipmentRequestStatus</td>
+                            <td>@item.RequestStartDate.ToShortDateString()</td>
+                            <td>@item.RequestEndDate.ToShortDateString()</td>
+                            <td>@Html.ActionLink("View", "Details", new { id = item.EquipmentRequestID })
+
+                            <text>|</text>
+
+                                @if (item.EquipmentRequestStatus != "Complete")
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.EquipmentRequestID })
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Edit</span>
+                                }
+
+                                <text>|</text>
+
+                                @if ((item.EquipmentRequestStatus != "Complete") && (item.EquipmentRequestStatus != "Out")
+                                     && (item.EquipmentRequestStatus != "Returned"))
+                                {
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.EquipmentRequestID })
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Delete</span>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+

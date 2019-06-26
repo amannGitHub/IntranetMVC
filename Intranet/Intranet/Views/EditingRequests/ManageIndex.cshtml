@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Intranet.ViewModels.EditingRequestsViewModel>
+
+@{
+    ViewBag.Title = "Manage Editing Requests";
+}
+
+<h2>Manage Editing Requests</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+<br />
+
+@using (Html.BeginForm())
+{
+    <input type="submit" value="View My Assignments" name="Buttons" class="btn btn-primary" />
+}
+<br />
+
+<table width="100%">
+    <tr>
+        <td>
+            <div id="demo">
+                <table id="datatablesRequests" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.EditingRequestID)</th>
+                            <th>@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.EmployeeName)</th>
+                            <th>@Html.DisplayNameFor(model => model.Project)</th>
+                            <th>@Html.DisplayNameFor(model => model.ProjectTitle)</th>                            
+                            <th>@Html.DisplayNameFor(model => model.ServiceRequested)</th>
+                            <th>@Html.DisplayNameFor(model => model.StyleGuide)</th>
+                            <th>@Html.DisplayNameFor(model => model.EditingRequestStatus)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.EditingRequestID</td>
+                            <td>@item.CreatedDate.ToShortDateString()</td>
+                            <td>@item.EmployeeName</td>
+                            <td>@item.Project</td>
+                            <td>@item.ProjectTitle</td>
+                            <td>@item.ServiceRequested</td>
+                            <td>@item.StyleGuide</td>
+                            <td>@item.EditingRequestStatus</td>
+                            <td>
+                                @Html.ActionLink("View", "Details", new { id = item.EditingRequestID, Manage = "Yes" })
+                                <text>|</text>
+                                @if (item.EditingRequestStatus != "Complete")
+                                {
+                                    @Html.ActionLink("Manage", "ManageRequest", new { id = item.EditingRequestID, Manage = "Yes" })
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Manage</span>
+                                }
+                                <text>|</text>
+                                @if (item.EditingRequestStatus == "Submitted")
+                                {
+                                    @Html.ActionLink("Delete", "ManageDelete", new { id = item.EditingRequestID, Manage = "Yes" })
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Delete</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+

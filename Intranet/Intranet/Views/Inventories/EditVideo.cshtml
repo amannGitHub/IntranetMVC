@@ -1,0 +1,189 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+
+        //Dropdownlist Selectedchange event
+        $("#ManufacturerID").change(function () {
+            $("#EquipmentModelID").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetEquipmentModels")', // we are calling json method
+                dataType: 'json',
+                data: { id: $("#ManufacturerID").val() },
+
+                // here we are get value of selected droplist and pass in same value as input to json method GetEquipmentModels.
+                success: function (myList) {
+
+                    $.each(myList, function (i, themodel) {
+                        $("#EquipmentModelID").append('<option value="' + themodel.Value + '">' +
+                         themodel.Text + '</option>');
+                    });
+                },
+
+                error: function (ex) {
+                    alert('Failed to retrieve myList.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+
+</script>
+
+@model Intranet.Models.Inventories
+
+@{
+    ViewBag.Title = "Edit Video Gear";
+}
+
+<h2>Edit Video Gear</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.InventoryID)
+        @Html.HiddenFor(model => model.CreatedDate)
+        @Html.HiddenFor(model => model.EquipmentCategoryID)
+        @Html.HiddenFor(model => model.HardDriveSizeID)
+        @Html.HiddenFor(model => model.CPUID)
+        @Html.HiddenFor(model => model.OperatingSystemID)
+        @Html.HiddenFor(model => model.RAMID)
+        @Html.HiddenFor(model => model.OpticalDriveID)
+        @Html.HiddenFor(model => model.TonerID)
+        @Html.HiddenFor(model => model.TonerCount)
+        @Html.HiddenFor(model => model.PrinterMemory)
+        @Html.HiddenFor(model => model.HardwareAddress)
+        @Html.HiddenFor(model => model.IPAddress)
+        @Html.HiddenFor(model => model.SharedName)
+        @Html.HiddenFor(model => model.FloppyDrive)
+        @Html.HiddenFor(model => model.InTheBag)
+        @Html.HiddenFor(model => model.DonatedDate)
+        
+        <div class="col-md-4">
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.emp_id) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("emp_id", ViewData["emp_id"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.emp_id, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ManufacturerID) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("ManufacturerID", ViewData["ManufacturerID"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.ManufacturerID, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EquipmentModelID) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("EquipmentModelID", ViewData["EquipmentModelID"] as List<SelectListItem>)
+                    @Html.ValidationMessageFor(model => model.EquipmentModelID, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EquipmentTypeID) 
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("EquipmentTypeID", ViewData["EquipmentTypeID"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.EquipmentTypeID, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Serial)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Serial)
+                    @Html.ValidationMessageFor(model => model.Serial, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Location) 
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Location)
+                    @Html.ValidationMessageFor(model => model.Location, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Comments) 
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Comments)
+                    @Html.ValidationMessageFor(model => model.Comments, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Deleted)
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Deleted)
+                    @Html.ValidationMessageFor(model => model.Deleted, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EquipmentCategoryID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("EquipmentCategoryID", ViewData["EquipmentCategoryID"] as List<SelectListItem>)
+                    @Html.ValidationMessageFor(model => model.EquipmentCategoryID, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.CreatedDate)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.CreatedDate)
+                    @Html.ValidationMessageFor(model => model.CreatedDate, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}

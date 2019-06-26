@@ -1,0 +1,167 @@
+﻿@model Intranet.Models.VideoRequests
+
+@{
+    ViewBag.Title = "Video Request";
+}
+
+<h2>View Video Request</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        <div class="row">
+            @Html.HiddenFor(model => model.VideoRequestID)
+            @Html.HiddenFor(model => model.emp_id)
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ProjectName)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.ProjectName)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.project_id)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.VideoTypeID)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("VideoTypeID", ViewData["VideoTypeID"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.VideoFileTypeID)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("VideoFileTypeID", ViewData["VideoFileTypeID"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.VideoDescription)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.VideoDescription)
+                    </div>
+                </div>
+                <br />&nbsp;
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.VideoRequestStatusID)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("VideoRequestStatusID", ViewData["VideoRequestStatusID"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DueDate)
+                    </div>
+                    <div class="col-md-10">
+                        @if (Model.DueDate != null)
+                        {
+                            @Html.DisplayFor(model => model.DueDate)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                </div>
+                <br />&nbsp;
+                @*<div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.HostingLocation)
+                    </div>
+                    <div class="col-md-10">
+                        @if (Model.HostingLocation != null)
+                        {
+                            @Html.DisplayFor(model => model.OtherFilesLocation)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PresentationLocation)
+                    </div>
+                    <div class="col-md-10">
+                        @if (Model.PresentationLocation != null)
+                        {
+                            @Html.DisplayFor(model => model.PresentationLocation)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                </div>
+                <br />&nbsp;*@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherFilesLocation)
+                    </div>
+                    <div class="col-md-10">
+                        @if (Model.OtherFilesLocation != null)
+                        {
+                            @Html.DisplayFor(model => model.OtherFilesLocation)
+                        }
+                        else
+                        {
+                            @System.Web.Configuration.WebConfigurationManager.AppSettings["NoDataText"]
+                        }
+                    </div>
+                </div>
+                @*<br />&nbsp;*@
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @{
+                    var Manage = Request.Url.Query.Contains("Manage=Yes");
+                }
+
+                @if (Manage == true)
+                {
+  
+                    @Html.ActionLink("Back to List", "ManageIndex")
+                }
+                else
+                {
+                    @Html.ActionLink("Back to List", "Index")
+                }
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}

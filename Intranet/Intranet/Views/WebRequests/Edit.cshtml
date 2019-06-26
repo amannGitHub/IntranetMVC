@@ -1,0 +1,183 @@
+﻿@model Intranet.Models.WebRequests
+
+@{
+    ViewBag.Title = "Web Request";
+}
+
+<h2>Edit Web Request </h2>
+<br />
+@using (Html.BeginForm("Edit", "WebRequests", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.WebRequestID)
+        @Html.HiddenFor(model => model.emp_id)
+        @Html.HiddenFor(model => model.project_id)
+        @Html.HiddenFor(model => model.WorkTypeID)
+        @Html.HiddenFor(model => model.website_id)
+        @Html.HiddenFor(model => model.WebRequestStatusID)
+        @Html.HiddenFor(model => model.RequestDate)
+        @Html.HiddenFor(model => model.RequestorApproved)
+        @Html.HiddenFor(model => model.AssignedDate)
+        @Html.HiddenFor(model => model.CompletedDate)
+        @Html.HiddenFor(model => model.DevHours)
+        @Html.HiddenFor(model => model.AssigneeID)
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.project_id) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.project_id, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.WorkTypeID) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("WorkTypeID", ViewData["WorkTypeID"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.WorkTypeID, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.website_id) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("website_id", ViewData["website_id"] as List<SelectListItem>, "Please select...")
+                    @Html.ValidationMessageFor(model => model.website_id, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MaxHours) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.MaxHours)
+                    @Html.ValidationMessageFor(model => model.MaxHours, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Comments) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Comments, 8, 40, new { HtmlAttributes = new { } })
+                    @Html.ValidationMessageFor(model => model.Comments, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            @if (Model.Files.Any(f => f.FileType == FileTypes.WebRequestFileType))
+            {
+
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.Label("Attachments")
+                    </div>
+                    <div class="col-md-10">
+                        <table>
+
+                            @foreach (var item in Model.Files)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink(item.FileName, "Download", routeValues: new { id = item.FileID })
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+
+            }
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.Label("Attachments") <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    <input type="file" name="newFiles" multiple />
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.WebRequestStatusID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("WebRequestStatusID", ViewData["WebRequestStatusID"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.RequestDate)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.RequestDate)
+                </div>
+            </div>
+            @*<br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.AssigneeID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("AssigneeID", ViewData["AssigneeID"] as List<SelectListItem>, "Select...", new { @disabled = "disabled" })
+                </div>
+            </div>*@
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                @if (Model.WebRequestStatusID == 3 && Model.RequestorApproved == false)
+                {
+                    <input type="submit" value="Approve" class="btn btn-primary" name="Buttons" />
+                }
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker_start').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            showClear: true,
+            showTodayButton: true,
+            stepping: 15,
+            useCurrent: false
+        });
+    });
+</script>

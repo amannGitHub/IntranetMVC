@@ -1,0 +1,213 @@
+﻿@model Intranet.Models.ITRequests
+
+@{
+    ViewBag.Title = "Manage IT Request";
+}
+
+@* ToDo: Customize this for Photo Requests *@
+
+<h2>Manage IT Request </h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.ITRequestID)
+        @Html.HiddenFor(model => model.emp_id)
+        @Html.HiddenFor(model => model.AssignDate)
+        @Html.HiddenFor(model => model.ITComments)
+        @*@Html.HiddenFor(model => model.ITRequestStatusID)*@
+        @Html.HiddenFor(model => model.CreatedDate)
+        @Html.HiddenFor(model => model.StatusDate)
+        @Html.HiddenFor(model => model.project_id)
+        @Html.HiddenFor(model => model.ITRequestTypeID)
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ITRequestTypeID) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @if (Model.ITRequestStatusID == 3)
+                    {
+                        @Html.DropDownList("ITRequestTypeID", ViewData["ITRequestTypeID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.ITRequestTypeID, null, new { @class = "text-danger" })
+                    }
+                    else
+                    {
+                        @Html.DropDownList("ITRequestTypeID", ViewData["ITRequestTypeID"] as List<SelectListItem>, "Please select...")
+                        @Html.ValidationMessageFor(model => model.ITRequestTypeID, null, new { @class = "text-danger" })
+                    }
+                </div>
+            </div>
+
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.RequestDescription) <span class="field-required">*</span>
+                </div>
+                <div class="col-md-10">
+                    @if (Model.ITRequestStatusID == 3)
+                    {
+                        @Html.DisplayFor(model => model.RequestDescription)
+                    }
+                    else
+                    {
+                        @Html.TextAreaFor(model => model.RequestDescription, 8, 40, new { HtmlAttributes = new { } })
+                        @Html.ValidationMessageFor(model => model.RequestDescription, null, new { @class = "text-danger" })
+
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ITRequestID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.ITRequestID)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.project_id)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("project_id", ViewData["division"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ITRequestStatusID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("ITRequestStatusID", ViewData["ITRequestStatusID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.ITRequestStatusID, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.StatusDate)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.StatusDate)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.CreatedDate)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ITComments)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.ITRequestStatusID == 3)
+                    {
+                        @Html.DisplayFor(model => model.ITComments)
+                    }
+                    else
+                    {
+                        @Html.TextAreaFor(model => model.ITComments, 8, 40, new { HtmlAttributes = new { } })
+                        @Html.ValidationMessageFor(model => model.ITComments)
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.AssigneeID)
+                </div>
+                <div class="col-md-10">
+                    @if (Model.ITRequestStatusID == 3)
+                    {
+                        @Html.DropDownList("AssigneeID", ViewData["AssigneeID"] as List<SelectListItem>, "Please select...", new { @disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.AssigneeID, null, new { @class = "text-danger" })
+                    }
+                    else
+                    {
+                        @Html.DropDownList("AssigneeID", ViewData["AssigneeID"] as List<SelectListItem>, "Please select...")
+                        @Html.ValidationMessageFor(model => model.AssigneeID, null, new { @class = "text-danger" })
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @if (Model.ITRequestStatusID != 3)
+                {
+                    <input type="submit" value="Update" name="Buttons" class="btn btn-primary" />
+                    @*<input type="submit" value="Assign" name="Buttons" class="btn btn-primary" />*@
+                }
+                @if (Model.ITRequestStatusID == 2)
+                {
+                    <input type="submit" value="Mark Complete" name="Buttons" class="btn btn-primary" />
+                }
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to List", "ManageIndex")
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker_start').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            showClear: true,
+            showTodayButton: true,
+            stepping: 15,
+            useCurrent: false
+        });
+        $('#datetimepicker_end').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            showClear: true,
+            showTodayButton: true,
+            stepping: 15,
+            useCurrent: false
+        });
+        $("#datetimepicker_start").on("dp.change", function (e) {
+            $('#datetimepicker_end').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker_end").on("dp.change", function (e) {
+            $('#datetimepicker_start').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+</script>

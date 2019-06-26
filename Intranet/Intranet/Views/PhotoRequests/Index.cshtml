@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Intranet.ViewModels.PhotoRequestsViewModel>
+
+@{
+    ViewBag.Title = "Photo Requests";
+}
+
+@* ToDo: Customize this for Photo Requests *@
+
+<h2>Photo Requests</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+<br />
+@using (Html.BeginForm())
+{
+    <input type="submit" value="Create Photo Request" name="Buttons" class="btn btn-primary" />
+    if (@User.IsInRole("SCGCORP\\Developers")) //I think Jon Strother is the only photographer, so change this to check if it's him for production
+        //OR if he isn't the only one have IT make the Photographer (name doesn't really matter) AD group
+    {
+        <input type="submit" value="Manage Photo Requests" name="Buttons" class="btn btn-primary" />
+    }
+}
+<br />
+<table width="100%">
+    <tr>
+        <td>
+            <div id="demo">
+                <table id="datatables" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.PhotoRequestID)</th>
+                            <th>@Html.DisplayNameFor(model => model.ProjectCode)</th>
+                            <th>@Html.DisplayNameFor(model => model.Client)</th>
+                            <th>@Html.DisplayNameFor(model => model.Division)</th>
+                            <th>@Html.DisplayNameFor(model => model.ProjectName)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.PhotoRequestID</td>
+                            <td>@item.ProjectCode</td>
+                            <td>@item.Client</td>
+                            <td>@item.Division</td>
+                            <td>@item.ProjectName</td>
+                            <td>@Html.ActionLink("View", "Details", new { id = item.PhotoRequestID })
+                            <text>|</text>
+                                @if (User.IsInRole("SCGCORP\\Developers"))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.PhotoRequestID })
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Edit</span>
+                                }
+                                <text>|</text>
+                                @if (User.IsInRole("SCGCORP\\Developers"))
+                                {
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.PhotoRequestID })
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Delete</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Intranet.ViewModels.VendorsViewModel>
+
+@{
+    ViewBag.Title = "Vendors";
+}
+
+<h2>Vendors</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+<br />
+@using (Html.BeginForm())
+{
+    <input type="submit" value="Add Vendor" name="Buttons" class="btn btn-primary"/>
+}
+<br />
+
+<table width="100%">
+    <tr>
+        <td>
+            <div id="demo">
+                <table id="datatables" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.VendorName)</th>
+                            <th>@Html.DisplayNameFor(model => model.City)</th>
+                            <th>@Html.DisplayNameFor(model => model.State)</th>
+                            <th>@Html.DisplayNameFor(model => model.Phone)</th>
+                            <th>@Html.DisplayNameFor(model => model.Services)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.VendorName</td>
+                            <td>@item.City</td>
+                            <td>@item.State</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Services</td>
+                            <td>@Html.ActionLink("View", "Details", new { id = item.VendorID })
+                                <text>|</text>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.VendorID })
+                                <text>|</text>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.VendorID })
+                            </td>
+
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+

@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Intranet.ViewModels.WebRequestsViewModel>
+
+@{
+    ViewBag.Title = "Manage Web Requests";
+}
+
+<h2>Manage Web Requests</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+<br />
+@using (Html.BeginForm())
+{
+    @*<input type="submit" value="My Requests" name="Create" class="btn btn-primary"/>*@
+}
+<br />
+
+<table width="100%">
+    <tr>
+        <td>
+            <div id="demo">
+                <table id="datatablesRequests" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.WebRequestID)</th>
+                            <th>@Html.DisplayNameFor(model => model.RequestDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.EmployeeName)</th>
+                            <th>@Html.DisplayNameFor(model => model.WorkType)</th>
+                            <th>@Html.DisplayNameFor(model => model.WebRequestStatus)</th>
+                            <th>@Html.DisplayNameFor(model => model.DeveloperName)</th>
+                            <th>Assigned</th>
+                            <th>Completed</th>
+                            <th>Manage</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.WebRequestID</td>
+                            <td>@item.RequestDate.Value.ToShortDateString()</td>
+                            <td>@item.EmployeeName</td>
+                            <td>@item.WorkType</td>
+                            <td>@item.WebRequestStatus</td>
+                            <td>@item.DeveloperName</td>
+                            @if (item.AssignedDate.HasValue)
+                            {
+                                <td>@item.AssignedDate.Value.ToShortDateString()</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                            @if (item.CompletedDate.HasValue)
+                            {
+                                <td>@item.CompletedDate.Value.ToShortDateString()</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                            <td>
+                                @Html.ActionLink("View", "Details", new { id = item.WebRequestID, Manage = "Yes" })
+                                <text>|</text>
+                                @if (item.WebRequestStatus != "Published")
+                                {
+                                    @Html.ActionLink("Manage", "ManageRequest", new { id = item.WebRequestID, Manage = "Yes" })
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Manage</span>
+                                }
+                                <text>|</text>
+                                @if (item.WebRequestStatus == "Submitted")
+                                {
+                                    @Html.ActionLink("Delete", "ManagerDelete", new { id = item.WebRequestID, Manage = "Yes" })
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Delete</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+

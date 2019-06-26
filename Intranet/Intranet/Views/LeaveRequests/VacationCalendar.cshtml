@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Intranet.ViewModels.LeaveRequestsViewModel>
+
+@{
+    ViewBag.Title = "VacationCalendar";
+}
+
+<h2>Employee Vacation Calendar</h2>
+
+@using (Html.BeginForm())
+{
+
+    <table id="colorCodes">
+        <tr><th colspan="2">Color Codes</th></tr>
+        <tr><td class="weekend" style="width:20%;">&nbsp;</td><td>Weekend</td></tr>
+    </table>
+
+
+    @Html.Hidden("hdnMonthYear")
+    <div align="center" style="margin-bottom:15px;">
+        <input type="submit" name="Buttons" value="Previous Month" />&nbsp;<strong>@ViewBag.MonthYear</strong>&nbsp;<input type="submit" name="Buttons" value="Next Month" />
+    </div>
+
+    <table ID="tblEmployeeVacation" class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="button" style="border:1px solid #666666;">Employee</th>
+                @for (int i = 1; i <= @ViewBag.DaysInMonth; i++)
+                {
+                    <th class="button" style="border:1px solid #666666;">@i</th>
+                }
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="border:1px solid #666666;">@item.EmployeeName</td>
+                @for (int i = 1; i <= @ViewBag.DaysInMonth; i++)
+                {
+
+                    if (ViewBag.weekendDateList.Contains(i).ToString() == "True")
+                    {
+                        <td class="weekend"></td>
+                    }
+                    else
+                    {
+                        <td class="normal"></td>
+                    }
+                }
+
+            </tr>
+        }
+    </table>
+}
+@Styles.Render("~/Content/Site.css")
+

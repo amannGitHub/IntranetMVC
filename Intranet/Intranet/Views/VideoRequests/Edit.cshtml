@@ -1,0 +1,159 @@
+﻿@model Intranet.Models.VideoRequests
+
+@{
+    ViewBag.Title = "Video Request";
+}
+
+<h2>Edit Video Request</h2>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        <div class="row">
+            @Html.HiddenFor(model => model.VideoRequestID)
+            @Html.HiddenFor(model => model.emp_id)
+            @Html.HiddenFor(model => model.VideoRequestStatusID)
+            @Html.HiddenFor(model => model.CreatedDate)
+            @Html.HiddenFor(model => model.StatusDate)
+            @Html.HiddenFor(model => model.RequestorApproved)
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ProjectName) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ProjectName)
+                        @Html.ValidationMessageFor(model => model.ProjectName, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.project_id) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("project_id", ViewData["project_id"] as List<SelectListItem>, "Please select...")
+                        @Html.ValidationMessageFor(model => model.project_id, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.VideoTypeID) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("VideoTypeID", ViewData["VideoTypeID"] as List<SelectListItem>, "Please select...")
+                        @Html.ValidationMessageFor(model => model.VideoTypeID, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.VideoFileTypeID) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("VideoFileTypeID", ViewData["VideoFileTypeID"] as List<SelectListItem>, "Please select...")
+                        @Html.ValidationMessageFor(model => model.VideoFileTypeID, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.VideoDescription) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.VideoDescription, 8, 40, new { HtmlAttributes = new { } })
+                        @Html.ValidationMessageFor(model => model.VideoDescription, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />&nbsp;
+                <br />&nbsp;
+                <br />&nbsp;
+                <br />&nbsp;
+                <br />&nbsp;
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DueDate) <span class="field-required">*</span>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.DueDate, new { id = "datetimepicker_start" })
+                        @Html.ValidationMessageFor(model => model.DueDate, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />&nbsp;
+                @*<div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.HostingLocation)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.HostingLocation)
+                    </div>
+                </div>
+                <br />&nbsp;
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PresentationLocation)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PresentationLocation)
+                    </div>
+                </div>
+                <br />&nbsp;*@
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OtherFilesLocation)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.OtherFilesLocation)
+                    </div>
+                </div>
+                <br />&nbsp;
+            </div>
+        </div>
+        <br />&nbsp;
+        <div class="row">
+            <div class="form-group">
+                <div class="editor-label"></div>
+                <div class="col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    @* Requestor Approval *@
+                    @if (Model.VideoRequestStatusID == 3 && Model.RequestorApproved == false)
+                    {
+                        <input type="submit" value="Approve" class="btn btn-primary" name="Buttons" />
+                    }
+                </div>
+            </div>
+            <br />&nbsp;
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label"></div>
+                <div class="col-md-10">
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </div>
+            <br />&nbsp;
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker_start').datetimepicker({
+                    daysOfWeekDisabled: [0, 6],
+                    showClear: true,
+                    showTodayButton: true,
+                    stepping: 15,
+                    useCurrent: false
+                });
+            });
+</script>
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@

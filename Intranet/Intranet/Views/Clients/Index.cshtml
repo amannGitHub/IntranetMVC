@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Intranet.Models.Clients>
+
+@{
+    ViewBag.Title = "Clients";
+}
+
+<h2>Clients</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">@TempData["Message"]</div>
+}
+<br />
+@using (Html.BeginForm())
+{
+    @*<input type="submit" value="Request Support" name="Buttons" class="btn btn-primary"/>*@
+    if (@User.IsInRole("SCGCORP\\Developers"))
+    {
+        <input type="submit" value="Add Client" name="Buttons" class="btn btn-primary" />
+    }
+}
+<br />
+
+<table width="100%">
+    <tr>
+        <td>
+            <div id="demo">
+                <table id="datatables" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            @*<th>@Html.DisplayNameFor(model => model.ClientID)</th>*@
+                            <th>@Html.DisplayNameFor(model => model.Client)</th>
+                            <th>@Html.DisplayNameFor(model => model.Acronym)</th>
+                            <th>@Html.DisplayNameFor(model => model.Deleted)</th>
+                            <th></th> @*this is so the bar at the top of the display goes all the way to the end of the table, over top of the Edit link*@ 
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            @*<td>@item.ClientID</td>*@
+                            <td>@item.Client</td>
+                            <td>@item.Acronym</td>
+                            <td>
+                                @if (@item.Deleted)
+                                {
+                                    <span class="text-muted">Deleted</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Active</span>
+                                }
+                            </td>
+                            <td>@* TODO Figure out real group and fix this role check (use other indexes to find correct code most likely leave request)*@
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ClientID })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+

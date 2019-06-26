@@ -1,0 +1,89 @@
+﻿@model Intranet.Models.EquipmentRequests
+
+@{
+    ViewBag.Title = "Extend Equipment Request";
+}
+
+<h2>Extend Equipment Request</h2>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.EquipmentRequestID)
+        @Html.HiddenFor(model => model.emp_id)
+        @Html.HiddenFor(model => model.EquipmentRequestStatusID)
+        @Html.HiddenFor(model => model.RequestSubmittedDate)
+        @Html.HiddenFor(model => model.RequestDecisionDate)
+        @Html.HiddenFor(model => model.project_id)
+        @Html.HiddenFor(model => model.RequestEndDate)
+        @Html.HiddenFor(model => model.RequestStartDate)
+        @Html.HiddenFor(model => model.DateReturned)
+
+        <div class="col-md-10">
+            <p>
+                Enter the new end date below and the IT staff will review and update the request.
+                If approved, this date will replace your previous end date.
+            </p>
+
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EquipmentRequestID)
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.EquipmentRequestID)
+                </div>
+            </div>
+            <br />&nbsp;
+            <div class="form-group">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ExtensionDate) 
+                </div> 
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ExtensionDate, new { id = "datetimepicker_start" })
+                    @Html.ValidationMessageFor(model => model.ExtensionDate, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />&nbsp;
+            
+            <br />&nbsp;
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                    <input type="submit" value="Request Extension" name="Buttons" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />&nbsp;
+        <br />&nbsp;
+        <div class="form-group">
+            <div class="editor-label"></div>
+            <div class="col-md-10">
+                @Html.ActionLink("Back to Request", "Edit", new { id = Model.EquipmentRequestID })
+            </div>
+        </div>
+        <br />&nbsp;
+    </div>
+
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker_start').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            showClear: true,
+            showTodayButton: true,
+            stepping: 15,
+            useCurrent: true
+        });
+       
+    });
+</script>
